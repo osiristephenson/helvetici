@@ -15,7 +15,7 @@ export default function Hero3D() {
 
     let rotation = 0;
     const img = new Image();
-    img.src = '/avatar-placeholder.svg'; // Placeholder - replace with your photo
+    img.src = '/avatar-original.jpg'; // Your photo
 
     const animate = () => {
       if (!ctx) return;
@@ -35,15 +35,23 @@ export default function Hero3D() {
       ctx.scale(scale, 1);
       ctx.translate(-centerX, -centerY);
 
-      // Draw image
+      // Draw image with circular mask and glow
       if (img.complete) {
-        ctx.drawImage(
-          img,
-          centerX - 150,
-          centerY - 300,
-          300,
-          600
-        );
+        const size = 400;
+        const x = centerX - size / 2;
+        const y = centerY - size / 2;
+
+        // Add glow effect
+        ctx.shadowColor = 'rgba(16, 185, 129, 0.5)';
+        ctx.shadowBlur = 40;
+
+        // Circular clip
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, size / 2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+
+        ctx.drawImage(img, x, y, size, size);
       }
 
       ctx.restore();
