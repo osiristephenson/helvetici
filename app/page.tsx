@@ -1,65 +1,120 @@
-import Image from "next/image";
+'use client';
+
+import Link from 'next/link';
+import { ArrowRight, Sparkles, Zap, Code2, Workflow } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Ambient blur orbs */}
+      <div className="blur-orb-green" style={{ top: '10%', left: '20%' }} />
+      <div className="blur-orb-grey" style={{ bottom: '20%', right: '15%' }} />
+      <div className="blur-orb-green" style={{ top: '60%', left: '70%', opacity: 0.5 }} />
+
+      {/* Hero */}
+      <div className="flex-1 flex items-center justify-center px-4 py-20 relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--node-bg)] border border-[var(--border)] rounded-full text-sm mb-8">
+            <Sparkles size={16} className="text-[var(--accent)]" />
+            Visual AI IDE for Designers
+          </div>
+
+          <h1 className="text-5xl sm:text-7xl font-bold mb-6 leading-tight">
+            Build AI Workflows
+            <br />
+            <span className="bg-gradient-to-r from-emerald-400 via-green-400 to-emerald-500 bg-clip-text text-transparent">
+              Visually
+            </span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <p className="text-xl text-[var(--text-secondary)] mb-12 max-w-2xl mx-auto">
+            No code, no prompts, no complexity. Just drag nodes, connect them, and watch Claude generate your designs in real-time.
           </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/editor"
+              className="flex items-center gap-2 px-8 py-4 bg-[var(--accent)] text-white rounded-lg hover:opacity-90 transition-all text-lg font-semibold"
+            >
+              Start Building
+              <ArrowRight size={20} />
+            </Link>
+
+            <a
+              href="https://github.com/yourusername/helvetici"
+              className="flex items-center gap-2 px-8 py-4 bg-[var(--node-bg)] border border-[var(--border)] rounded-lg hover:border-[var(--accent)] transition-all text-lg"
+            >
+              <Code2 size={20} />
+              View on GitHub
+            </a>
+          </div>
+
+          {/* Features */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-24">
+            <div className="glass-panel rounded-xl p-6 hover:border-[var(--accent)] transition-all">
+              <Workflow size={32} className="text-[var(--accent)] mb-4 mx-auto" />
+              <h3 className="text-lg font-semibold mb-2">Node-Based</h3>
+              <p className="text-sm text-[var(--text-secondary)]">
+                Build complex AI workflows by connecting visual nodes. No coding required.
+              </p>
+            </div>
+
+            <div className="glass-panel rounded-xl p-6 hover:border-[var(--accent)] transition-all">
+              <Zap size={32} className="text-[var(--accent)] mb-4 mx-auto" />
+              <h3 className="text-lg font-semibold mb-2">Claude Powered</h3>
+              <p className="text-sm text-[var(--text-secondary)]">
+                Powered by Anthropic's Claude for intelligent, context-aware generation.
+              </p>
+            </div>
+
+            <div className="glass-panel rounded-xl p-6 hover:border-[var(--accent)] transition-all">
+              <Code2 size={32} className="text-[var(--accent)] mb-4 mx-auto" />
+              <h3 className="text-lg font-semibold mb-2">Export Ready</h3>
+              <p className="text-sm text-[var(--text-secondary)]">
+                Generate production-ready HTML, React, or SwiftUI code instantly.
+              </p>
+            </div>
+          </div>
+
+          {/* How it works */}
+          <div className="mt-24">
+            <h2 className="text-3xl font-bold mb-12">How It Works</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
+              <div className="glass-panel rounded-xl p-6">
+                <div className="text-5xl font-bold text-[var(--accent)] mb-3">01</div>
+                <h3 className="text-lg font-semibold mb-2">Describe</h3>
+                <p className="text-sm text-[var(--text-secondary)]">
+                  Add a Text Input node and describe what you want to generate.
+                </p>
+              </div>
+
+              <div className="glass-panel rounded-xl p-6">
+                <div className="text-5xl font-bold text-[var(--accent)] mb-3">02</div>
+                <h3 className="text-lg font-semibold mb-2">Connect</h3>
+                <p className="text-sm text-[var(--text-secondary)]">
+                  Connect it to an AI Generate node and then to a Preview node.
+                </p>
+              </div>
+
+              <div className="glass-panel rounded-xl p-6">
+                <div className="text-5xl font-bold text-[var(--accent)] mb-3">03</div>
+                <h3 className="text-lg font-semibold mb-2">Generate</h3>
+                <p className="text-sm text-[var(--text-secondary)]">
+                  Hit Run Flow and watch Claude create your design in real-time.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t border-[var(--border)] py-8">
+        <div className="max-w-4xl mx-auto px-4 text-center text-sm text-[var(--text-secondary)]">
+          <p>Built by designers, for designers. Powered by Claude.</p>
+          <p className="mt-2">© 2024 Helvetici. All rights reserved.</p>
         </div>
-      </main>
+      </footer>
     </div>
   );
 }

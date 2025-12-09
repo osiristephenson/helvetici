@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Helvetici
 
-## Getting Started
+**Visual AI IDE for Designers**
 
-First, run the development server:
+Build AI-powered design workflows by connecting visual nodes. No code required, powered by Claude.
+
+## Features
+
+- 🎨 **Node-Based Interface** - Build complex AI workflows visually
+- ⚡ **Claude Powered** - Intelligent generation using Anthropic's Claude Sonnet 4
+- 📤 **Export Ready** - Generate production-ready HTML/CSS code
+- ⌨️ **Keyboard Shortcuts** - `Cmd/Ctrl + Enter` to run flows
+- 🎯 **Real-time Preview** - See your designs generated instantly
+- 💾 **Copy Code** - One-click code export with syntax highlighting
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- Anthropic API key ([get one here](https://console.anthropic.com/))
+
+### Installation
 
 ```bash
+# Install dependencies
+npm install
+
+# Create .env.local file
+echo "ANTHROPIC_API_KEY=your_key_here" > .env.local
+
+# Run dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How to Use
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Drag Nodes** - Drag Text Input, AI Generate, and Preview nodes onto canvas
+2. **Connect** - Click and drag between node handles to connect them
+3. **Enter Prompt** - Type your design description in Text Input
+4. **Generate** - Click "Run Flow" or press `Cmd+Enter`
+5. **Export** - Switch to Code tab and copy the generated code
 
-## Learn More
+### Example Workflow
 
-To learn more about Next.js, take a look at the following resources:
+```
+Text Input → AI Generate → Preview
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Prompt:** "A blue button with rounded corners that says Click Me"
+**Output:** Production-ready HTML with Tailwind CSS
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment to helvetici.com
 
-## Deploy on Vercel
+### Option 1: Vercel (Recommended)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# Install Vercel CLI
+npm i -g vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Login
+vercel login
+
+# Deploy
+vercel --prod
+
+# Set env variable
+vercel env add ANTHROPIC_API_KEY production
+```
+
+Then point helvetici.com DNS to your Vercel deployment.
+
+### Option 2: Netlify
+
+```bash
+npm run build
+netlify deploy --prod --dir=.next
+```
+
+Set `ANTHROPIC_API_KEY` in Netlify dashboard.
+
+### Option 3: Custom Server
+
+```bash
+npm run build
+npm start
+```
+
+Set environment variable and point helvetici.com DNS to your server.
+
+## Tech Stack
+
+- Next.js 14 (App Router)
+- React Flow - Node-based canvas
+- Zustand - State management
+- Tailwind CSS - Styling
+- Anthropic Claude API - AI generation
+- TypeScript
+
+## Project Structure
+
+```
+helvetici/
+├── app/
+│   ├── editor/page.tsx       # Main editor
+│   ├── api/generate/route.ts # Claude API
+│   └── page.tsx              # Landing page
+├── components/
+│   ├── Canvas.tsx            # React Flow wrapper
+│   ├── Sidebar.tsx           # Node palette
+│   └── nodes/                # Node components
+├── lib/
+│   └── store.ts              # Zustand store
+└── .env.local                # API keys (gitignored)
+```
+
+## Environment Variables
+
+Required in `.env.local`:
+
+```env
+ANTHROPIC_API_KEY=sk-ant-api03-...
+```
+
+## License
+
+MIT
+
+---
+
+Built with Claude by [@yourusername](https://twitter.com/yourusername)
