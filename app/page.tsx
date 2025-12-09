@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Zap, Code2, Workflow } from 'lucide-react';
+import Hero3D from '@/components/Hero3D';
 
 export default function Home() {
   return (
@@ -17,6 +18,11 @@ export default function Home() {
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--node-bg)] border border-[var(--border)] rounded-full text-sm mb-8">
             <Sparkles size={16} className="text-[var(--accent)]" />
             Visual AI IDE for Designers
+          </div>
+
+          {/* 3D Hero Avatar */}
+          <div className="mb-12">
+            <Hero3D />
           </div>
 
           <h1 className="text-5xl sm:text-7xl font-bold mb-6 leading-tight">

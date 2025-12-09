@@ -1,0 +1,33 @@
+<svg width="300" height="600" viewBox="0 0 300 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="iridescent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#764ba2;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f093fb;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#4facfe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Head -->
+  <ellipse cx="150" cy="120" rx="60" ry="70" fill="#f5d5b8"/>
+
+  <!-- Body (hoodie) -->
+  <path d="M 90 190 Q 90 180 100 180 L 200 180 Q 210 180 210 190 L 210 400 Q 210 410 200 410 L 100 410 Q 90 410 90 400 Z" fill="url(#iridescent)"/>
+
+  <!-- Hood -->
+  <path d="M 80 180 Q 80 140 100 120 L 200 120 Q 220 140 220 180 L 200 180 L 100 180 Z" fill="url(#iridescent)" opacity="0.8"/>
+
+  <!-- Glasses -->
+  <ellipse cx="130" cy="115" rx="18" ry="15" fill="none" stroke="#333" stroke-width="3"/>
+  <ellipse cx="170" cy="115" rx="18" ry="15" fill="none" stroke="#333" stroke-width="3"/>
+  <line x1="148" y1="115" x2="152" y2="115" stroke="#333" stroke-width="3"/>
+
+  <!-- Pants -->
+  <rect x="90" y="410" width="50" height="180" fill="#2d3436" rx="5"/>
+  <rect x="160" y="410" width="50" height="180" fill="#2d3436" rx="5"/>
+
+  <!-- Shoes -->
+  <ellipse cx="115" cy="590" rx="30" ry="15" fill="#1a1a1a"/>
+  <ellipse cx="185" cy="590" rx="30" ry="15" fill="#1a1a1a"/>
+</svg>
