@@ -39,13 +39,19 @@ function CanvasContent() {
       event.preventDefault();
 
       const type = event.dataTransfer.getData('application/reactflow');
-      if (!type) return;
+      console.log('Dropped node type:', type);
+
+      if (!type) {
+        console.log('No type found in dataTransfer');
+        return;
+      }
 
       const position = screenToFlowPosition({
         x: event.clientX,
         y: event.clientY,
       });
 
+      console.log('Adding node at position:', position);
       addNode(type, position);
     },
     [screenToFlowPosition, addNode]
@@ -65,12 +71,21 @@ function CanvasContent() {
         connectionMode={ConnectionMode.Loose}
         fitView
         className="bg-[var(--bg-primary)]"
+        defaultEdgeOptions={{
+          animated: true,
+          style: { strokeWidth: 2 },
+        }}
       >
-        <Background color="var(--border)" gap={20} size={1} />
+        <Background
+          color="rgba(16, 185, 129, 0.1)"
+          gap={24}
+          size={1.5}
+          variant="dots"
+        />
         <Controls />
         <MiniMap
-          className="bg-[var(--bg-surface)] border border-[var(--border)]"
-          nodeColor="var(--node-bg)"
+          nodeColor="var(--accent)"
+          maskColor="rgba(0, 0, 0, 0.6)"
         />
       </ReactFlow>
     </div>

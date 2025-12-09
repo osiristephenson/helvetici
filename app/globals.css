@@ -3,17 +3,18 @@
 
 :root {
   /* Helvetici Dark Grey & Green Theme */
-  --bg-primary: #0f0f10;
-  --bg-surface: #18181a;
-  --border: #2d2d30;
-  --text-primary: #f4f4f5;
+  --bg-primary: #0a0a0b;
+  --bg-surface: #111113;
+  --border: #2a2a2d;
+  --text-primary: #fafafa;
   --text-secondary: #a1a1aa;
   --accent: #10b981;
+  --accent-glow: rgba(16, 185, 129, 0.4);
   --accent-dark: #059669;
   --success: #22c55e;
-  --node-bg: #1c1c1f;
+  --node-bg: #18181a;
   --grey-800: #27272a;
-  --grey-900: #18181b;
+  --grey-900: #0f0f10;
 }
 
 @theme inline {
@@ -40,22 +41,30 @@ body {
 /* Ambient blur backgrounds */
 .blur-orb-green {
   position: absolute;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0) 70%);
-  filter: blur(80px);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0.08) 50%, rgba(16, 185, 129, 0) 70%);
+  filter: blur(120px);
   pointer-events: none;
   z-index: 0;
+  animation: float 20s ease-in-out infinite;
 }
 
 .blur-orb-grey {
   position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(63, 63, 70, 0.2) 0%, rgba(63, 63, 70, 0) 70%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(100, 100, 110, 0.15) 0%, rgba(80, 80, 90, 0.05) 50%, rgba(63, 63, 70, 0) 70%);
   filter: blur(100px);
   pointer-events: none;
   z-index: 0;
+  animation: float 25s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(30px, -30px); }
+  66% { transform: translate(-30px, 30px); }
 }
 
 .glass-panel {
@@ -80,23 +89,56 @@ body {
 
 /* React Flow dark theme overrides */
 .react-flow__node {
-  background: var(--node-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(24, 24, 26, 0.95) 0%, rgba(20, 20, 22, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(42, 42, 45, 0.8);
+  border-radius: 16px;
   padding: 16px;
   color: var(--text-primary);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.1);
+  transition: all 0.3s ease;
+}
+
+.react-flow__node:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.react-flow__node.selected {
+  border-color: var(--accent);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 30px rgba(16, 185, 129, 0.3);
 }
 
 .react-flow__handle {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   background: var(--accent);
-  border: none;
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 0 10px var(--accent-glow);
+  transition: all 0.2s ease;
+}
+
+.react-flow__handle:hover {
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 15px var(--accent-glow);
 }
 
 .react-flow__edge-path {
   stroke: var(--accent);
   stroke-width: 2;
+  filter: drop-shadow(0 0 4px var(--accent-glow));
+}
+
+.react-flow__edge.animated .react-flow__edge-path {
+  stroke-dasharray: 5;
+  animation: dashdraw 0.5s linear infinite;
+}
+
+@keyframes dashdraw {
+  to {
+    stroke-dashoffset: -10;
+  }
 }
 
 .react-flow__background {
@@ -104,16 +146,34 @@ body {
 }
 
 .react-flow__controls {
-  background: var(--bg-surface);
+  background: rgba(17, 17, 19, 0.8);
+  backdrop-filter: blur(10px);
   border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .react-flow__controls button {
-  background: var(--bg-surface);
+  background: transparent;
   color: var(--text-primary);
   border-bottom: 1px solid var(--border);
+  transition: all 0.2s ease;
 }
 
 .react-flow__controls button:hover {
-  background: var(--node-bg);
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--accent);
+}
+
+.react-flow__controls button:last-child {
+  border-bottom: none;
+}
+
+.react-flow__minimap {
+  background: rgba(17, 17, 19, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
