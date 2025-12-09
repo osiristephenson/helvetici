@@ -41,7 +41,7 @@ export default function Home() {
             </Link>
 
             <a
-              href="https://github.com/yourusername/helvetici"
+              href="https://github.com/osiristephenson/helvetici"
               className="flex items-center gap-2 px-8 py-4 bg-[var(--node-bg)] border border-[var(--border)] rounded-lg hover:border-[var(--accent)] transition-all text-lg"
             >
               <Code2 size={20} />

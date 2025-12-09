@@ -130,4 +130,4 @@ MIT
 
 ---
 
-Built with Claude by [@yourusername](https://twitter.com/yourusername)
+Built with Claude by [@osiristephenson](https://github.com/osiristephenson)
