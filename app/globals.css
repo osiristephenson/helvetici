@@ -109,7 +109,11 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 30px rgba(16, 185, 129, 0.3);
 }
 
-.react-flow__handle {
+.react-flow__handle,
+.react-flow__handle-left,
+.react-flow__handle-right,
+.react-flow__handle.target,
+.react-flow__handle.source {
   width: 16px !important;
   height: 16px !important;
   background: var(--accent) !important;
@@ -120,7 +124,11 @@ body {
   z-index: 10 !important;
 }
 
-.react-flow__handle:hover {
+.react-flow__handle:hover,
+.react-flow__handle-left:hover,
+.react-flow__handle-right:hover,
+.react-flow__handle.target:hover,
+.react-flow__handle.source:hover {
   width: 20px !important;
   height: 20px !important;
   box-shadow: 0 0 20px var(--accent-glow) !important;
