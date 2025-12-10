@@ -40,14 +40,12 @@ function AIGenerateNode({ id, data }: AIGenerateNodeProps) {
       <Handle
         type="target"
         position={Position.Left}
-        className="!w-3 !h-3 !bg-[var(--text-secondary)]"
       />
 
       {/* Output handle */}
       <Handle
         type="source"
         position={Position.Right}
-        className="!w-3 !h-3 !bg-[var(--accent)]"
       />
     </div>
   );

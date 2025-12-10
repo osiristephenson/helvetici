@@ -94,7 +94,6 @@ function PreviewNode({ id, data }: PreviewNodeProps) {
       <Handle
         type="target"
         position={Position.Left}
-        className="!w-3 !h-3 !bg-[var(--text-secondary)]"
       />
     </div>
   );
