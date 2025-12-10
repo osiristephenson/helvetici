@@ -110,18 +110,21 @@ body {
 }
 
 .react-flow__handle {
-  width: 12px;
-  height: 12px;
-  background: var(--accent);
-  border: 2px solid var(--bg-primary);
-  box-shadow: 0 0 10px var(--accent-glow);
-  transition: all 0.2s ease;
+  width: 16px !important;
+  height: 16px !important;
+  background: var(--accent) !important;
+  border: 3px solid var(--bg-primary) !important;
+  box-shadow: 0 0 10px var(--accent-glow) !important;
+  transition: all 0.2s ease !important;
+  cursor: crosshair !important;
+  z-index: 10 !important;
 }
 
 .react-flow__handle:hover {
-  width: 14px;
-  height: 14px;
-  box-shadow: 0 0 15px var(--accent-glow);
+  width: 20px !important;
+  height: 20px !important;
+  box-shadow: 0 0 20px var(--accent-glow) !important;
+  cursor: crosshair !important;
 }
 
 .react-flow__edge-path {
