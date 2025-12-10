@@ -61,7 +61,7 @@ function PreviewNode({ id, data }: PreviewNodeProps) {
           <>
             {activeTab === 'preview' ? (
               <div
-                className="p-4"
+                className="p-4 bg-white rounded-lg"
                 dangerouslySetInnerHTML={{ __html: data.output }}
               />
             ) : (
