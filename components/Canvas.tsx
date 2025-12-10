@@ -4,6 +4,7 @@ import { useMemo, useCallback, useRef } from 'react';
 import {
   ReactFlow,
   Background,
+  BackgroundVariant,
   Controls,
   MiniMap,
   ConnectionMode,
@@ -80,7 +81,7 @@ function CanvasContent() {
           color="rgba(16, 185, 129, 0.1)"
           gap={24}
           size={1.5}
-          variant="dots"
+          variant={BackgroundVariant.Dots}
         />
         <Controls />
         <MiniMap
