@@ -23,7 +23,9 @@ Rules:
 - Use modern, minimal design aesthetics
 - Follow the provided design context/tokens if given
 - Make it responsive
-- No explanations, just code
+- DO NOT wrap output in markdown code fences (no \`\`\`html or \`\`\`)
+- DO NOT include any explanations or commentary
+- Return ONLY the raw HTML code
 - Wrap output in a single div with class 'helvetici-output'
 
 ${context ? `Design Context:\n${context}` : ''}`;
@@ -40,7 +42,12 @@ ${context ? `Design Context:\n${context}` : ''}`;
       ],
     });
 
-    const output = message.content[0].type === 'text' ? message.content[0].text : '';
+    let output = message.content[0].type === 'text' ? message.content[0].text : '';
+
+    // Strip markdown code fences if present
+    output = output.replace(/^```(?:html|xml|jsx?|tsx?)?\n?/gm, '');
+    output = output.replace(/\n?```$/gm, '');
+    output = output.trim();
 
     return NextResponse.json({
       output,
