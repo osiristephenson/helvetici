@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Zap, Code2, Workflow } from 'lucide-react';
-import Hero3D from '@/components/Hero3D';
+import Hero3DSequence from '@/components/Hero3DSequence';
 
 export default function Home() {
   return (
@@ -22,7 +22,7 @@ export default function Home() {
 
           {/* 3D Hero Avatar */}
           <div className="mb-12">
-            <Hero3D />
+            <Hero3DSequence />
           </div>
 
           <h1 className="text-5xl sm:text-7xl font-bold mb-6 leading-tight">
