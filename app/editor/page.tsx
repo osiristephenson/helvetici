@@ -1,14 +1,16 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Canvas from '@/components/Canvas';
 import Sidebar from '@/components/Sidebar';
+import Settings from '@/components/Settings';
 import { useStore } from '@/lib/store';
-import { Play, Trash2, Home } from 'lucide-react';
+import { Play, Trash2, Home, Settings as SettingsIcon } from 'lucide-react';
 import Link from 'next/link';
 
 export default function EditorPage() {
   const { runFlow, isRunning, nodes, edges } = useStore();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -46,6 +48,14 @@ export default function EditorPage() {
               Press <kbd className="px-2 py-1 bg-[var(--node-bg)] border border-[var(--border)] rounded text-xs">⌘ Enter</kbd> to run
             </div>
           )}
+
+          <button
+            onClick={() => setIsSettingsOpen(true)}
+            className="p-2 hover:bg-[var(--bg-primary)] rounded-lg transition-colors"
+            title="Settings"
+          >
+            <SettingsIcon size={18} />
+          </button>
 
           <button
             onClick={runFlow}
@@ -93,6 +103,9 @@ export default function EditorPage() {
           )}
         </div>
       </div>
+
+      {/* Settings Modal */}
+      <Settings isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </div>
   );
 }

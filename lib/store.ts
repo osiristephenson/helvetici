@@ -114,6 +114,11 @@ export const useStore = create<HelveticiStore>((set, get) => ({
 
         if (!prompt.trim()) continue;
 
+        // Get user's API key from localStorage (if available)
+        const userApiKey = typeof window !== 'undefined'
+          ? localStorage.getItem('helvetici_api_key')
+          : null;
+
         // Call the API
         const response = await fetch('/api/generate', {
           method: 'POST',
@@ -122,6 +127,7 @@ export const useStore = create<HelveticiStore>((set, get) => ({
             prompt: prompt.trim(),
             context,
             outputType: 'component',
+            userApiKey: userApiKey || undefined,
           }),
         });
 

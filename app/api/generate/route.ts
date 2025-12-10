@@ -1,13 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 
-const anthropic = new Anthropic({
-  apiKey: (process.env.ANTHROPIC_API_KEY || '').trim(),
-});
-
 export async function POST(request: NextRequest) {
   try {
-    const { prompt, context, outputType } = await request.json();
+    const { prompt, context, outputType, userApiKey } = await request.json();
 
     if (!prompt) {
       return NextResponse.json(
@@ -15,6 +11,20 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Use user's API key if provided, otherwise fall back to server key
+    const apiKey = userApiKey || (process.env.ANTHROPIC_API_KEY || '').trim();
+
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: 'No API key provided. Please add your Anthropic API key in Settings.' },
+        { status: 401 }
+      );
+    }
+
+    const anthropic = new Anthropic({
+      apiKey: apiKey.trim(),
+    });
 
     const systemPrompt = `You are Helvetici, an AI design assistant. Generate clean, production-ready code based on the designer's description.
 
