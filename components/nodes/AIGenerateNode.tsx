@@ -40,12 +40,28 @@ function AIGenerateNode({ id, data }: AIGenerateNodeProps) {
       <Handle
         type="target"
         position={Position.Left}
+        style={{
+          width: '16px',
+          height: '16px',
+          background: '#10b981',
+          border: '3px solid #0a0a0b',
+          boxShadow: '0 0 10px rgba(16, 185, 129, 0.4)',
+          cursor: 'crosshair',
+        }}
       />
 
       {/* Output handle */}
       <Handle
         type="source"
         position={Position.Right}
+        style={{
+          width: '16px',
+          height: '16px',
+          background: '#10b981',
+          border: '3px solid #0a0a0b',
+          boxShadow: '0 0 10px rgba(16, 185, 129, 0.4)',
+          cursor: 'crosshair',
+        }}
       />
     </div>
   );
