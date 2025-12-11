@@ -7,6 +7,7 @@ import Settings from '@/components/Settings';
 import WorkflowManager from '@/components/WorkflowManager';
 import TemplatesModal from '@/components/TemplatesModal';
 import UpgradeModal from '@/components/UpgradeModal';
+import Onboarding from '@/components/Onboarding';
 import { useStore } from '@/lib/store';
 import { getUserPlan } from '@/lib/credits';
 import { Play, Trash2, Home, Settings as SettingsIcon, Save, FolderOpen, Sparkles, Zap } from 'lucide-react';
@@ -213,6 +214,9 @@ export default function EditorPage() {
         onClose={() => setIsUpgradeOpen(false)}
         reason={userPlan.credits <= 0 ? 'no_credits' : undefined}
       />
+
+      {/* Onboarding */}
+      <Onboarding />
     </div>
   );
 }
