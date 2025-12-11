@@ -24,6 +24,29 @@ function PreviewNode({ id, data }: PreviewNodeProps) {
     }
   };
 
+  // Create iframe content with Tailwind CSS
+  const getIframeContent = () => {
+    return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      background: white;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  ${data.output || ''}
+</body>
+</html>`;
+  };
+
   return (
     <div className="min-w-[400px]">
       <div className="flex items-center justify-between mb-3">
@@ -56,17 +79,19 @@ function PreviewNode({ id, data }: PreviewNodeProps) {
         </div>
       </div>
 
-      <div className="bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg min-h-[300px] relative">
+      <div className="bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg min-h-[300px] max-h-[500px] relative overflow-hidden">
         {data.output ? (
           <>
             {activeTab === 'preview' ? (
-              <div
-                className="p-4 bg-white rounded-lg"
-                dangerouslySetInnerHTML={{ __html: data.output }}
+              <iframe
+                srcDoc={getIframeContent()}
+                className="w-full h-full min-h-[300px] max-h-[500px] bg-white rounded-lg"
+                sandbox="allow-scripts"
+                title="Preview"
               />
             ) : (
-              <div className="relative">
-                <pre className="p-4 text-xs overflow-auto max-h-[400px] text-[var(--text-secondary)]">
+              <div className="relative h-full overflow-auto max-h-[500px]">
+                <pre className="p-4 text-xs overflow-auto text-[var(--text-secondary)]">
                   <code>{data.output}</code>
                 </pre>
                 <button
