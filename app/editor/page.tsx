@@ -5,8 +5,9 @@ import Canvas from '@/components/Canvas';
 import Sidebar from '@/components/Sidebar';
 import Settings from '@/components/Settings';
 import WorkflowManager from '@/components/WorkflowManager';
+import TemplatesModal from '@/components/TemplatesModal';
 import { useStore } from '@/lib/store';
-import { Play, Trash2, Home, Settings as SettingsIcon, Save, FolderOpen } from 'lucide-react';
+import { Play, Trash2, Home, Settings as SettingsIcon, Save, FolderOpen, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
 export default function EditorPage() {
@@ -14,6 +15,7 @@ export default function EditorPage() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [workflowManagerOpen, setWorkflowManagerOpen] = useState(false);
   const [workflowManagerMode, setWorkflowManagerMode] = useState<'save' | 'load'>('save');
+  const [isTemplatesOpen, setIsTemplatesOpen] = useState(false);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -69,6 +71,15 @@ export default function EditorPage() {
               Press <kbd className="px-2 py-1 bg-[var(--node-bg)] border border-[var(--border)] rounded text-xs">⌘ Enter</kbd> to run
             </div>
           )}
+
+          <button
+            onClick={() => setIsTemplatesOpen(true)}
+            className="flex items-center gap-2 px-3 py-2 bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg hover:border-[var(--accent)] transition-colors"
+            title="Browse Templates"
+          >
+            <Sparkles size={16} className="text-[var(--accent)]" />
+            <span className="text-sm font-medium">Templates</span>
+          </button>
 
           <button
             onClick={() => {
@@ -156,6 +167,9 @@ export default function EditorPage() {
         onClose={() => setWorkflowManagerOpen(false)}
         mode={workflowManagerMode}
       />
+
+      {/* Templates Modal */}
+      <TemplatesModal isOpen={isTemplatesOpen} onClose={() => setIsTemplatesOpen(false)} />
     </div>
   );
 }
