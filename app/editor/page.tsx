@@ -6,8 +6,10 @@ import Sidebar from '@/components/Sidebar';
 import Settings from '@/components/Settings';
 import WorkflowManager from '@/components/WorkflowManager';
 import TemplatesModal from '@/components/TemplatesModal';
+import UpgradeModal from '@/components/UpgradeModal';
 import { useStore } from '@/lib/store';
-import { Play, Trash2, Home, Settings as SettingsIcon, Save, FolderOpen, Sparkles } from 'lucide-react';
+import { getUserPlan } from '@/lib/credits';
+import { Play, Trash2, Home, Settings as SettingsIcon, Save, FolderOpen, Sparkles, Zap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function EditorPage() {
@@ -16,6 +18,9 @@ export default function EditorPage() {
   const [workflowManagerOpen, setWorkflowManagerOpen] = useState(false);
   const [workflowManagerMode, setWorkflowManagerMode] = useState<'save' | 'load'>('save');
   const [isTemplatesOpen, setIsTemplatesOpen] = useState(false);
+  const [isUpgradeOpen, setIsUpgradeOpen] = useState(false);
+  const [userPlan, setUserPlan] = useState(getUserPlan());
+  const [forceUpdate, setForceUpdate] = useState(0);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -45,6 +50,25 @@ export default function EditorPage() {
 
   const hasNodes = nodes.length > 0;
 
+  // Update credits display after running
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setUserPlan(getUserPlan());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleRunFlow = async () => {
+    const plan = getUserPlan();
+    if (plan.credits <= 0) {
+      setIsUpgradeOpen(true);
+      return;
+    }
+    await runFlow();
+    setUserPlan(getUserPlan());
+    setForceUpdate(prev => prev + 1);
+  };
+
   return (
     <div className="flex flex-col h-screen relative overflow-hidden">
       {/* Toolbar */}
@@ -63,6 +87,18 @@ export default function EditorPage() {
               {nodes.length} nodes · {edges.length} connections
             </div>
           )}
+
+          {/* Credits Display */}
+          <button
+            onClick={() => setIsUpgradeOpen(true)}
+            className="flex items-center gap-2 px-3 py-1.5 bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg hover:border-[var(--accent)] transition-colors"
+            title="View Plans"
+          >
+            <Zap size={14} className={userPlan.credits <= 3 ? 'text-amber-500' : 'text-[var(--accent)]'} />
+            <span className={`text-xs font-medium ${userPlan.credits <= 3 ? 'text-amber-500' : ''}`}>
+              {userPlan.credits} credits
+            </span>
+          </button>
         </div>
 
         <div className="flex items-center gap-3">
@@ -112,7 +148,7 @@ export default function EditorPage() {
           </button>
 
           <button
-            onClick={runFlow}
+            onClick={handleRunFlow}
             disabled={isRunning || !hasNodes}
             className="flex items-center gap-2 px-4 py-2 bg-[var(--accent)] text-white rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
@@ -170,6 +206,13 @@ export default function EditorPage() {
 
       {/* Templates Modal */}
       <TemplatesModal isOpen={isTemplatesOpen} onClose={() => setIsTemplatesOpen(false)} />
+
+      {/* Upgrade Modal */}
+      <UpgradeModal
+        isOpen={isUpgradeOpen}
+        onClose={() => setIsUpgradeOpen(false)}
+        reason={userPlan.credits <= 0 ? 'no_credits' : undefined}
+      />
     </div>
   );
 }

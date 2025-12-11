@@ -109,6 +109,14 @@ export const useStore = create<HelveticiStore>((set, get) => ({
 
   runFlow: async () => {
     const { nodes, edges, updateNodeData } = get();
+
+    // Check credits before running
+    const { useCredit } = await import('./credits');
+    if (!useCredit()) {
+      // Will show upgrade modal via UI
+      return;
+    }
+
     set({ isRunning: true });
 
     try {
