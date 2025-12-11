@@ -4,13 +4,16 @@ import { useEffect, useState } from 'react';
 import Canvas from '@/components/Canvas';
 import Sidebar from '@/components/Sidebar';
 import Settings from '@/components/Settings';
+import WorkflowManager from '@/components/WorkflowManager';
 import { useStore } from '@/lib/store';
-import { Play, Trash2, Home, Settings as SettingsIcon } from 'lucide-react';
+import { Play, Trash2, Home, Settings as SettingsIcon, Save, FolderOpen } from 'lucide-react';
 import Link from 'next/link';
 
 export default function EditorPage() {
-  const { runFlow, isRunning, nodes, edges } = useStore();
+  const { runFlow, isRunning, nodes, edges, currentWorkflowName } = useStore();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [workflowManagerOpen, setWorkflowManagerOpen] = useState(false);
+  const [workflowManagerMode, setWorkflowManagerMode] = useState<'save' | 'load'>('save');
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -19,6 +22,18 @@ export default function EditorPage() {
       if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
         e.preventDefault();
         runFlow();
+      }
+      // Cmd/Ctrl + S to save
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        setWorkflowManagerMode('save');
+        setWorkflowManagerOpen(true);
+      }
+      // Cmd/Ctrl + O to open
+      if ((e.metaKey || e.ctrlKey) && e.key === 'o') {
+        e.preventDefault();
+        setWorkflowManagerMode('load');
+        setWorkflowManagerOpen(true);
       }
     };
 
@@ -37,9 +52,15 @@ export default function EditorPage() {
             <Home size={18} />
             <h1 className="text-xl font-semibold">Helvetici</h1>
           </Link>
-          <div className="text-xs text-[var(--text-secondary)]">
-            {nodes.length} nodes · {edges.length} connections
-          </div>
+          {currentWorkflowName ? (
+            <div className="text-sm text-[var(--text-secondary)]">
+              {currentWorkflowName}
+            </div>
+          ) : (
+            <div className="text-xs text-[var(--text-secondary)]">
+              {nodes.length} nodes · {edges.length} connections
+            </div>
+          )}
         </div>
 
         <div className="flex items-center gap-3">
@@ -48,6 +69,28 @@ export default function EditorPage() {
               Press <kbd className="px-2 py-1 bg-[var(--node-bg)] border border-[var(--border)] rounded text-xs">⌘ Enter</kbd> to run
             </div>
           )}
+
+          <button
+            onClick={() => {
+              setWorkflowManagerMode('load');
+              setWorkflowManagerOpen(true);
+            }}
+            className="p-2 hover:bg-[var(--bg-primary)] rounded-lg transition-colors"
+            title="Open Workflow (⌘O)"
+          >
+            <FolderOpen size={18} />
+          </button>
+
+          <button
+            onClick={() => {
+              setWorkflowManagerMode('save');
+              setWorkflowManagerOpen(true);
+            }}
+            className="p-2 hover:bg-[var(--bg-primary)] rounded-lg transition-colors"
+            title="Save Workflow (⌘S)"
+          >
+            <Save size={18} />
+          </button>
 
           <button
             onClick={() => setIsSettingsOpen(true)}
@@ -106,6 +149,13 @@ export default function EditorPage() {
 
       {/* Settings Modal */}
       <Settings isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+
+      {/* Workflow Manager Modal */}
+      <WorkflowManager
+        isOpen={workflowManagerOpen}
+        onClose={() => setWorkflowManagerOpen(false)}
+        mode={workflowManagerMode}
+      />
     </div>
   );
 }

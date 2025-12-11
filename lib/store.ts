@@ -10,12 +10,23 @@ import {
   EdgeChange,
 } from '@xyflow/react';
 
+interface Workflow {
+  id: string;
+  name: string;
+  nodes: Node[];
+  edges: Edge[];
+  createdAt: number;
+  updatedAt: number;
+}
+
 interface HelveticiStore {
   nodes: Node[];
   edges: Edge[];
   selectedNode: string | null;
   isRunning: boolean;
   outputs: Record<string, any>;
+  currentWorkflowId: string | null;
+  currentWorkflowName: string | null;
 
   // Actions
   onNodesChange: (changes: NodeChange<Node>[]) => void;
@@ -27,6 +38,11 @@ interface HelveticiStore {
   setSelectedNode: (nodeId: string | null) => void;
   setOutput: (nodeId: string, value: any) => void;
   runFlow: () => Promise<void>;
+  saveWorkflow: (name: string) => void;
+  loadWorkflow: (id: string) => void;
+  getWorkflows: () => Workflow[];
+  deleteWorkflow: (id: string) => void;
+  newWorkflow: () => void;
 }
 
 export const useStore = create<HelveticiStore>((set, get) => ({
@@ -35,6 +51,8 @@ export const useStore = create<HelveticiStore>((set, get) => ({
   selectedNode: null,
   isRunning: false,
   outputs: {},
+  currentWorkflowId: null,
+  currentWorkflowName: null,
 
   onNodesChange: (changes) => {
     set({
@@ -153,5 +171,91 @@ export const useStore = create<HelveticiStore>((set, get) => ({
     } finally {
       set({ isRunning: false });
     }
+  },
+
+  saveWorkflow: (name) => {
+    const { nodes, edges, currentWorkflowId } = get();
+
+    if (typeof window === 'undefined') return;
+
+    const workflows = JSON.parse(localStorage.getItem('helvetici_workflows') || '[]');
+    const now = Date.now();
+
+    if (currentWorkflowId) {
+      // Update existing workflow
+      const index = workflows.findIndex((w: Workflow) => w.id === currentWorkflowId);
+      if (index !== -1) {
+        workflows[index] = {
+          ...workflows[index],
+          name,
+          nodes,
+          edges,
+          updatedAt: now,
+        };
+      }
+    } else {
+      // Create new workflow
+      const newWorkflow: Workflow = {
+        id: `workflow-${now}`,
+        name,
+        nodes,
+        edges,
+        createdAt: now,
+        updatedAt: now,
+      };
+      workflows.push(newWorkflow);
+      set({ currentWorkflowId: newWorkflow.id });
+    }
+
+    localStorage.setItem('helvetici_workflows', JSON.stringify(workflows));
+    set({ currentWorkflowName: name });
+  },
+
+  loadWorkflow: (id) => {
+    if (typeof window === 'undefined') return;
+
+    const workflows = JSON.parse(localStorage.getItem('helvetici_workflows') || '[]');
+    const workflow = workflows.find((w: Workflow) => w.id === id);
+
+    if (workflow) {
+      set({
+        nodes: workflow.nodes,
+        edges: workflow.edges,
+        currentWorkflowId: workflow.id,
+        currentWorkflowName: workflow.name,
+      });
+    }
+  },
+
+  getWorkflows: () => {
+    if (typeof window === 'undefined') return [];
+    return JSON.parse(localStorage.getItem('helvetici_workflows') || '[]');
+  },
+
+  deleteWorkflow: (id) => {
+    if (typeof window === 'undefined') return;
+
+    const workflows = JSON.parse(localStorage.getItem('helvetici_workflows') || '[]');
+    const filtered = workflows.filter((w: Workflow) => w.id !== id);
+    localStorage.setItem('helvetici_workflows', JSON.stringify(filtered));
+
+    // If deleting current workflow, clear it
+    if (get().currentWorkflowId === id) {
+      set({
+        nodes: [],
+        edges: [],
+        currentWorkflowId: null,
+        currentWorkflowName: null,
+      });
+    }
+  },
+
+  newWorkflow: () => {
+    set({
+      nodes: [],
+      edges: [],
+      currentWorkflowId: null,
+      currentWorkflowName: null,
+    });
   },
 }));
