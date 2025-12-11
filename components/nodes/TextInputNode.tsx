@@ -22,29 +22,31 @@ function TextInputNode({ id, data }: TextInputNodeProps) {
   };
 
   return (
-    <div className="min-w-[300px] group">
+    <div className="min-w-[280px] group bg-white border border-gray-300 rounded-lg shadow-sm p-4">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <Type size={16} className="text-[var(--accent)]" />
-          <span className="text-sm font-semibold">Text Input</span>
+          <div className="p-1.5 bg-gray-100 rounded">
+            <Type size={14} className="text-gray-700" />
+          </div>
+          <span className="text-sm font-semibold text-gray-900">Text Input</span>
         </div>
         <button
           onClick={() => deleteNode(id)}
-          className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-500/20 rounded transition-all"
+          className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-50 rounded transition-all"
           title="Delete node"
         >
-          <X size={14} className="text-red-400" />
+          <X size={14} className="text-red-500" />
         </button>
       </div>
 
       <textarea
-        className="w-full h-32 bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg p-3 text-sm resize-none focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
-        placeholder="Describe what you want to generate...&#10;&#10;Example: 'A blue button with rounded corners and white text that says Click Me'"
+        className="w-full h-24 bg-white border border-gray-300 rounded p-2 text-sm resize-none focus:outline-none focus:border-[#c2ff00] focus:ring-1 focus:ring-[#c2ff00] text-gray-900 placeholder:text-gray-400"
+        placeholder="Describe what you want to generate..."
         value={data.value || ''}
         onChange={handleChange}
       />
 
-      <div className="mt-2 text-xs text-[var(--text-secondary)]">
+      <div className="mt-2 text-xs text-gray-500">
         {data.value?.length || 0} characters
       </div>
 
@@ -53,11 +55,10 @@ function TextInputNode({ id, data }: TextInputNodeProps) {
         type="source"
         position={Position.Right}
         style={{
-          width: '16px',
-          height: '16px',
-          background: '#10b981',
-          border: '3px solid #0a0a0b',
-          boxShadow: '0 0 10px rgba(16, 185, 129, 0.4)',
+          width: '12px',
+          height: '12px',
+          background: '#9CA3AF',
+          border: '2px solid white',
           cursor: 'crosshair',
         }}
       />

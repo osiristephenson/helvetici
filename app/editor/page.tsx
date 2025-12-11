@@ -71,51 +71,44 @@ export default function EditorPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen relative overflow-hidden">
-      {/* Toolbar */}
-      <div className="h-14 bg-[var(--bg-surface)] border-b border-[var(--border)] flex items-center justify-between px-4">
+    <div className="flex flex-col h-screen relative overflow-hidden bg-[#F5F5F5]">
+      {/* Top Bar */}
+      <div className="h-14 bg-[#E0E0E0] border-b border-gray-300 flex items-center justify-between px-4">
         <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-2 hover:opacity-70 transition-opacity">
-            <Home size={18} />
-            <h1 className="text-xl font-semibold">Helvetici</h1>
+          <Link href="/" className="flex items-center gap-2 hover:opacity-70 transition-opacity text-gray-900">
+            <h1 className="text-lg font-bold">helvetici</h1>
           </Link>
+          <span className="text-sm text-gray-600">/</span>
           {currentWorkflowName ? (
-            <div className="text-sm text-[var(--text-secondary)]">
+            <div className="text-sm text-gray-700 font-medium">
               {currentWorkflowName}
             </div>
           ) : (
-            <div className="text-xs text-[var(--text-secondary)]">
-              {nodes.length} nodes · {edges.length} connections
+            <div className="text-sm text-gray-600">
+              Untitled Workflow
             </div>
           )}
 
           {/* Credits Display */}
           <button
             onClick={() => setIsUpgradeOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg hover:border-[var(--accent)] transition-colors"
+            className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-300 rounded hover:border-gray-400 transition-colors ml-4"
             title="View Plans"
           >
-            <Zap size={14} className={userPlan.credits <= 3 ? 'text-amber-500' : 'text-[var(--accent)]'} />
-            <span className={`text-xs font-medium ${userPlan.credits <= 3 ? 'text-amber-500' : ''}`}>
+            <Zap size={14} className={userPlan.credits <= 3 ? 'text-amber-500' : 'text-gray-700'} />
+            <span className={`text-xs font-medium ${userPlan.credits <= 3 ? 'text-amber-500' : 'text-gray-900'}`}>
               {userPlan.credits} credits
             </span>
           </button>
         </div>
 
-        <div className="flex items-center gap-3">
-          {hasNodes && (
-            <div className="text-xs text-[var(--text-secondary)] hidden sm:block">
-              Press <kbd className="px-2 py-1 bg-[var(--node-bg)] border border-[var(--border)] rounded text-xs">⌘ Enter</kbd> to run
-            </div>
-          )}
-
+        <div className="flex items-center gap-2">
           <button
             onClick={() => setIsTemplatesOpen(true)}
-            className="flex items-center gap-2 px-3 py-2 bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg hover:border-[var(--accent)] transition-colors"
+            className="px-3 py-1.5 bg-white border border-gray-300 rounded text-sm hover:bg-gray-50 transition-colors"
             title="Browse Templates"
           >
-            <Sparkles size={16} className="text-[var(--accent)]" />
-            <span className="text-sm font-medium">Templates</span>
+            Templates
           </button>
 
           <button
@@ -123,10 +116,10 @@ export default function EditorPage() {
               setWorkflowManagerMode('load');
               setWorkflowManagerOpen(true);
             }}
-            className="p-2 hover:bg-[var(--bg-primary)] rounded-lg transition-colors"
+            className="p-2 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors text-gray-700"
             title="Open Workflow (⌘O)"
           >
-            <FolderOpen size={18} />
+            <FolderOpen size={16} />
           </button>
 
           <button
@@ -134,59 +127,55 @@ export default function EditorPage() {
               setWorkflowManagerMode('save');
               setWorkflowManagerOpen(true);
             }}
-            className="p-2 hover:bg-[var(--bg-primary)] rounded-lg transition-colors"
+            className="p-2 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors text-gray-700"
             title="Save Workflow (⌘S)"
           >
-            <Save size={18} />
+            <Save size={16} />
           </button>
 
           <button
             onClick={() => setIsSettingsOpen(true)}
-            className="p-2 hover:bg-[var(--bg-primary)] rounded-lg transition-colors"
+            className="p-2 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors text-gray-700"
             title="Settings"
           >
-            <SettingsIcon size={18} />
+            <SettingsIcon size={16} />
           </button>
 
           <button
             onClick={handleRunFlow}
             disabled={isRunning || !hasNodes}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--accent)] text-white rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-[#c2ff00] text-black rounded hover:bg-[#b0ed00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium text-sm"
           >
             <Play size={16} className={isRunning ? 'animate-pulse' : ''} />
-            {isRunning ? 'Running...' : 'Run Flow'}
+            {isRunning ? 'Running...' : 'Run'}
           </button>
         </div>
       </div>
 
       {/* Main Area */}
-      <div className="flex flex-1 overflow-hidden relative">
-        {/* Ambient blur orbs */}
-        <div className="blur-orb-green" style={{ top: '20%', right: '30%' }} />
-        <div className="blur-orb-grey" style={{ bottom: '10%', left: '25%' }} />
-
+      <div className="flex flex-1 overflow-hidden relative bg-[#FAFAFA]">
         <Sidebar />
-        <div className="flex-1 relative z-10">
+        <div className="flex-1 relative">
           <Canvas />
           {!hasNodes && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="text-center max-w-md">
-                <h2 className="text-2xl font-bold mb-2">Start Building</h2>
-                <p className="text-[var(--text-secondary)]">
+                <h2 className="text-2xl font-semibold mb-3 text-gray-900">Start Building</h2>
+                <p className="text-gray-600 text-sm leading-relaxed mb-8">
                   Drag nodes from the sidebar onto the canvas, connect them, and run your AI workflow.
                 </p>
-                <div className="mt-6 grid grid-cols-3 gap-4 text-sm">
-                  <div className="glass-panel rounded-lg p-4">
-                    <div className="text-3xl font-bold text-[var(--accent)] mb-2">01</div>
-                    <div className="text-[var(--text-secondary)]">Add Text Input</div>
+                <div className="grid grid-cols-3 gap-4 text-sm">
+                  <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                    <div className="text-2xl font-bold text-gray-400 mb-2">01</div>
+                    <div className="text-gray-600 text-xs">Add Input</div>
                   </div>
-                  <div className="glass-panel rounded-lg p-4">
-                    <div className="text-3xl font-bold text-[var(--accent)] mb-2">02</div>
-                    <div className="text-[var(--text-secondary)]">Add AI Generate</div>
+                  <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                    <div className="text-2xl font-bold text-gray-400 mb-2">02</div>
+                    <div className="text-gray-600 text-xs">Add AI Model</div>
                   </div>
-                  <div className="glass-panel rounded-lg p-4">
-                    <div className="text-3xl font-bold text-[var(--accent)] mb-2">03</div>
-                    <div className="text-[var(--text-secondary)]">Add Preview</div>
+                  <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                    <div className="text-2xl font-bold text-gray-400 mb-2">03</div>
+                    <div className="text-gray-600 text-xs">Add Preview</div>
                   </div>
                 </div>
               </div>

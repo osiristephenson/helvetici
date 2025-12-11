@@ -14,14 +14,16 @@ interface AIGenerateNodeProps {
 
 function AIGenerateNode({ id, data }: AIGenerateNodeProps) {
   return (
-    <div className="min-w-[280px]">
+    <div className="min-w-[280px] bg-white border border-gray-300 rounded-lg shadow-sm p-4">
       <div className="flex items-center gap-2 mb-3">
-        <Sparkles size={16} className="text-[var(--accent)]" />
-        <span className="text-sm font-semibold">AI Generate</span>
+        <div className="p-1.5 bg-[#c2ff00]/20 rounded">
+          <Sparkles size={14} className="text-gray-900" />
+        </div>
+        <span className="text-sm font-semibold text-gray-900">AI Generate</span>
       </div>
 
       <div className="space-y-3">
-        <select className="w-full bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg p-2 text-sm focus:outline-none focus:border-[var(--accent)]">
+        <select className="w-full bg-white border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-[#c2ff00] text-gray-900">
           <option>Component</option>
           <option>Code</option>
           <option>Copy</option>
@@ -29,7 +31,7 @@ function AIGenerateNode({ id, data }: AIGenerateNodeProps) {
         </select>
 
         {data.isGenerating && (
-          <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+          <div className="flex items-center gap-2 text-sm text-gray-600">
             <span className="animate-spin">⚡</span>
             Generating...
           </div>
@@ -41,11 +43,10 @@ function AIGenerateNode({ id, data }: AIGenerateNodeProps) {
         type="target"
         position={Position.Left}
         style={{
-          width: '16px',
-          height: '16px',
-          background: '#10b981',
-          border: '3px solid #0a0a0b',
-          boxShadow: '0 0 10px rgba(16, 185, 129, 0.4)',
+          width: '12px',
+          height: '12px',
+          background: '#9CA3AF',
+          border: '2px solid white',
           cursor: 'crosshair',
         }}
       />
@@ -55,11 +56,10 @@ function AIGenerateNode({ id, data }: AIGenerateNodeProps) {
         type="source"
         position={Position.Right}
         style={{
-          width: '16px',
-          height: '16px',
-          background: '#10b981',
-          border: '3px solid #0a0a0b',
-          boxShadow: '0 0 10px rgba(16, 185, 129, 0.4)',
+          width: '12px',
+          height: '12px',
+          background: '#9CA3AF',
+          border: '2px solid white',
           cursor: 'crosshair',
         }}
       />

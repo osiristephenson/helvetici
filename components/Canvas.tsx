@@ -71,22 +71,23 @@ function CanvasContent() {
         onDragOver={onDragOver}
         connectionMode={ConnectionMode.Loose}
         fitView
-        className="bg-[var(--bg-primary)]"
+        className="bg-[#FAFAFA]"
         defaultEdgeOptions={{
-          animated: true,
-          style: { strokeWidth: 2 },
+          animated: false,
+          style: { strokeWidth: 2, stroke: '#D1D5DB' },
         }}
       >
         <Background
-          color="rgba(16, 185, 129, 0.1)"
-          gap={24}
-          size={1.5}
+          color="#E5E7EB"
+          gap={20}
+          size={1}
           variant={BackgroundVariant.Dots}
         />
-        <Controls />
+        <Controls className="bg-white border border-gray-300 rounded shadow-sm" />
         <MiniMap
-          nodeColor="var(--accent)"
-          maskColor="rgba(0, 0, 0, 0.6)"
+          nodeColor="#9CA3AF"
+          maskColor="rgba(0, 0, 0, 0.1)"
+          className="bg-white border border-gray-300 rounded shadow-sm"
         />
       </ReactFlow>
     </div>

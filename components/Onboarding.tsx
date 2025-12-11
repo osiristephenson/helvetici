@@ -52,32 +52,32 @@ export default function Onboarding() {
   const Icon = currentStep.icon;
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-[var(--bg-surface)] border border-[var(--border)] rounded-2xl max-w-md w-full p-8 shadow-2xl relative">
+    <div className="fixed inset-0 bg-white/95 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white border border-black/10 max-w-md w-full p-12 shadow-xl relative">
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 p-2 hover:bg-[var(--bg-primary)] rounded-lg transition-colors"
+          className="absolute top-6 right-6 p-2 hover:bg-black/5 transition-colors"
         >
           <X size={18} />
         </button>
 
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Icon size={32} className="text-white" />
+        <div className="text-center mb-12">
+          <div className="w-12 h-12 bg-black flex items-center justify-center mx-auto mb-6">
+            <Icon size={24} className="text-white" />
           </div>
-          <h2 className="text-2xl font-bold mb-2">{currentStep.title}</h2>
-          <p className="text-[var(--text-secondary)]">{currentStep.description}</p>
+          <h2 className="text-3xl font-light tracking-tight mb-4">{currentStep.title}</h2>
+          <p className="text-black/60 font-light leading-relaxed">{currentStep.description}</p>
         </div>
 
         {/* Progress Dots */}
-        <div className="flex items-center justify-center gap-2 mb-6">
+        <div className="flex items-center justify-center gap-2 mb-8">
           {steps.map((_, i) => (
             <div
               key={i}
-              className={`h-2 rounded-full transition-all ${
+              className={`h-1 transition-all ${
                 i === step
-                  ? 'w-8 bg-[var(--accent)]'
-                  : 'w-2 bg-[var(--border)]'
+                  ? 'w-8 bg-black'
+                  : 'w-1 bg-black/20'
               }`}
             />
           ))}
@@ -85,14 +85,14 @@ export default function Onboarding() {
 
         <button
           onClick={handleNext}
-          className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:opacity-90 transition-opacity"
+          className="w-full py-3 bg-black text-white text-sm font-medium hover:bg-black/90 transition-colors"
         >
           {step < steps.length - 1 ? 'Next' : 'Get Started'}
         </button>
 
         <button
           onClick={handleClose}
-          className="w-full mt-2 py-2 text-sm text-[var(--text-secondary)] hover:text-white transition-colors"
+          className="w-full mt-3 py-2 text-sm text-black/60 hover:text-black transition-colors font-light"
         >
           Skip
         </button>

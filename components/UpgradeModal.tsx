@@ -44,73 +44,67 @@ export default function UpgradeModal({ isOpen, onClose, reason }: UpgradeModalPr
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-[var(--bg-surface)] border border-[var(--border)] rounded-xl w-full max-w-5xl max-h-[90vh] overflow-auto shadow-2xl">
+    <div className="fixed inset-0 bg-white/95 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white border border-black/10 w-full max-w-5xl max-h-[90vh] overflow-auto shadow-xl">
         {/* Header */}
-        <div className="sticky top-0 bg-[var(--bg-surface)] border-b border-[var(--border)] p-6 flex items-center justify-between">
+        <div className="sticky top-0 bg-white border-b border-black/5 p-8 flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold mb-1">
-              {reason === 'no_credits' ? 'Out of Credits' : 'Upgrade to Pro'}
+            <h2 className="text-3xl font-light tracking-tight mb-2">
+              {reason === 'no_credits' ? 'Out of Credits' : 'Upgrade'}
             </h2>
-            <p className="text-sm text-[var(--text-secondary)]">
+            <p className="text-sm text-black/60 font-light">
               {reason === 'no_credits'
                 ? `You've used all ${userPlan.maxCredits} credits this month. Upgrade for more!`
-                : 'Unlock unlimited generations and premium features'}
+                : 'Choose a plan that works for you'}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-[var(--bg-primary)] rounded-lg transition-colors"
+            className="p-2 hover:bg-black/5 transition-colors"
           >
             <X size={20} />
           </button>
         </div>
 
         {/* Pricing Cards */}
-        <div className="p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="p-12 grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Free Plan */}
-          <div className="bg-[var(--bg-primary)] border border-[var(--border)] rounded-2xl p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Sparkles size={20} className="text-slate-400" />
-              <h3 className="text-xl font-bold">Free</h3>
-            </div>
+          <div className="border-t border-black/10 pt-8">
+            <div className="text-xs tracking-wider text-black/40 uppercase mb-4">Free</div>
             <div className="mb-6">
-              <div className="text-4xl font-bold mb-1">$0</div>
-              <div className="text-sm text-[var(--text-secondary)]">Forever free</div>
+              <div className="text-5xl font-light mb-2">$0</div>
+              <div className="text-sm text-black/60 font-light">Forever</div>
             </div>
-            <ul className="space-y-3 mb-6">
+            <ul className="space-y-3 mb-8">
               {PLANS.free.features.map((feature, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm">
-                  <Check size={16} className="text-green-500 mt-0.5 flex-shrink-0" />
+                <li key={i} className="flex items-start gap-2 text-sm text-black/60 font-light">
+                  <Check size={16} className="text-black mt-0.5 flex-shrink-0" />
                   <span>{feature}</span>
                 </li>
               ))}
             </ul>
             <button
               disabled={userPlan.tier === 'free'}
-              className="w-full py-3 bg-[var(--bg-surface)] border border-[var(--border)] rounded-xl font-semibold opacity-50 cursor-not-allowed"
+              className="w-full py-3 border border-black/10 text-black text-sm opacity-50 cursor-not-allowed"
             >
               Current Plan
             </button>
           </div>
 
           {/* Pro Plan */}
-          <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border-2 border-purple-500 rounded-2xl p-6 relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+          <div className="border-t border-black pt-8 relative">
+            <div className="absolute -top-3 left-0 bg-black text-white px-3 py-1 text-xs tracking-wider">
               POPULAR
             </div>
-            <div className="flex items-center gap-2 mb-4">
-              <Zap size={20} className="text-purple-500" />
-              <h3 className="text-xl font-bold">Pro</h3>
-            </div>
+            <div className="text-xs tracking-wider text-black uppercase mb-4">Pro</div>
             <div className="mb-6">
-              <div className="text-4xl font-bold mb-1">${PLANS.pro.price}</div>
-              <div className="text-sm text-[var(--text-secondary)]">per month</div>
+              <div className="text-5xl font-light mb-2">${PLANS.pro.price}</div>
+              <div className="text-sm text-black/60 font-light">Per month</div>
             </div>
-            <ul className="space-y-3 mb-6">
+            <ul className="space-y-3 mb-8">
               {PLANS.pro.features.map((feature, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm">
-                  <Check size={16} className="text-purple-500 mt-0.5 flex-shrink-0" />
+                <li key={i} className="flex items-start gap-2 text-sm text-black/60 font-light">
+                  <Check size={16} className="text-black mt-0.5 flex-shrink-0" />
                   <span>{feature}</span>
                 </li>
               ))}
@@ -118,26 +112,23 @@ export default function UpgradeModal({ isOpen, onClose, reason }: UpgradeModalPr
             <button
               onClick={() => handleUpgrade('pro')}
               disabled={loading || userPlan.tier !== 'free'}
-              className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+              className="w-full py-3 bg-black text-white text-sm hover:bg-black/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              {loading ? 'Loading...' : userPlan.tier === 'pro' ? 'Current Plan' : 'Upgrade to Pro'}
+              {loading ? 'Loading...' : userPlan.tier === 'pro' ? 'Current Plan' : 'Get Pro'}
             </button>
           </div>
 
           {/* Unlimited Plan */}
-          <div className="bg-[var(--bg-primary)] border border-[var(--border)] rounded-2xl p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Crown size={20} className="text-amber-500" />
-              <h3 className="text-xl font-bold">Unlimited</h3>
-            </div>
+          <div className="border-t border-black/10 pt-8">
+            <div className="text-xs tracking-wider text-black/40 uppercase mb-4">Unlimited</div>
             <div className="mb-6">
-              <div className="text-4xl font-bold mb-1">${PLANS.unlimited.price}</div>
-              <div className="text-sm text-[var(--text-secondary)]">per month</div>
+              <div className="text-5xl font-light mb-2">${PLANS.unlimited.price}</div>
+              <div className="text-sm text-black/60 font-light">Per month</div>
             </div>
-            <ul className="space-y-3 mb-6">
+            <ul className="space-y-3 mb-8">
               {PLANS.unlimited.features.map((feature, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm">
-                  <Check size={16} className="text-amber-500 mt-0.5 flex-shrink-0" />
+                <li key={i} className="flex items-start gap-2 text-sm text-black/60 font-light">
+                  <Check size={16} className="text-black mt-0.5 flex-shrink-0" />
                   <span>{feature}</span>
                 </li>
               ))}
@@ -145,9 +136,9 @@ export default function UpgradeModal({ isOpen, onClose, reason }: UpgradeModalPr
             <button
               onClick={() => handleUpgrade('unlimited')}
               disabled={loading || userPlan.tier === 'unlimited'}
-              className="w-full py-3 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl font-semibold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+              className="w-full py-3 border border-black text-black text-sm hover:bg-black hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
-              {loading ? 'Loading...' : userPlan.tier === 'unlimited' ? 'Current Plan' : 'Upgrade to Unlimited'}
+              {loading ? 'Loading...' : userPlan.tier === 'unlimited' ? 'Current Plan' : 'Go Unlimited'}
             </button>
           </div>
         </div>

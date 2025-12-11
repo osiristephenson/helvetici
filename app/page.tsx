@@ -1,429 +1,376 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Sparkles, Zap, Code2, Workflow, Check, Star, Users, TrendingUp, Boxes } from 'lucide-react';
-import Hero3DSequence from '@/components/Hero3DSequence';
+import { ArrowRight } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Home() {
+  const [persona, setPersona] = useState<'designers' | 'developers'>('designers');
+
+  const benefits = {
+    designers: [
+      {
+        title: 'Prototype AI workflows fast',
+        description: 'Drag nodes to create intelligent interfaces without waiting on code.',
+      },
+      {
+        title: 'Chain logic visually',
+        description: 'Link agents, prompts and data sources on a canvas and see results instantly.',
+      },
+      {
+        title: 'Share & iterate',
+        description: 'Export workflows as demos or hand them off to developers seamlessly.',
+      },
+    ],
+    developers: [
+      {
+        title: 'BYOK-friendly',
+        description: 'Connect your own API keys and swap models or services with ease.',
+      },
+      {
+        title: 'Integrate anywhere',
+        description: 'Embed workflows into your app via SDK or export to serverless functions.',
+      },
+      {
+        title: 'Collaborate in sync',
+        description: 'Work alongside designers on the same canvas and refine logic together.',
+      },
+    ],
+  };
+
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden bg-[var(--bg-primary)]">
-      {/* Animated gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-emerald-900/20 pointer-events-none" />
-
-      {/* Ambient blur orbs - more dramatic */}
-      <div className="blur-orb-green animate-pulse" style={{ top: '10%', left: '10%', width: '600px', height: '600px' }} />
-      <div className="blur-orb-grey" style={{ bottom: '10%', right: '10%', width: '500px', height: '500px' }} />
-      <div className="blur-orb-green" style={{ top: '50%', left: '60%', opacity: 0.3, width: '400px', height: '400px' }} />
-
+    <main className="min-h-screen bg-[#f9f7f3] text-black overflow-x-hidden">
       {/* Navigation */}
-      <nav className="relative z-20 border-b border-[var(--border)] bg-[var(--bg-surface)]/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-lg flex items-center justify-center">
-                <Sparkles size={18} className="text-white" />
-              </div>
-              <span className="text-xl font-bold">Helvetici</span>
-            </div>
-            <div className="flex items-center gap-6">
-              <Link href="/gallery" className="text-sm text-[var(--text-secondary)] hover:text-white transition-colors">
-                Gallery
-              </Link>
-              <Link href="/editor" className="text-sm text-[var(--text-secondary)] hover:text-white transition-colors">
-                Pricing
-              </Link>
-              <Link
-                href="/editor"
-                className="px-4 py-2 bg-[var(--accent)] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
-              >
-                Launch App
-              </Link>
-            </div>
+      <nav className="fixed top-0 left-0 w-full z-50 bg-[#f9f7f3]/70 backdrop-blur-md shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold">
+            helvetici
+          </Link>
+          <div className="hidden md:flex items-center gap-8 text-sm">
+            <Link href="/product" className="hover:text-gray-600 transition-colors">
+              Product
+            </Link>
+            <Link href="/templates" className="hover:text-gray-600 transition-colors">
+              Templates
+            </Link>
+            <Link href="/gallery" className="hover:text-gray-600 transition-colors">
+              Gallery
+            </Link>
+            <a href="#pricing" className="hover:text-gray-600 transition-colors">
+              Pricing
+            </a>
+            <Link href="/docs" className="hover:text-gray-600 transition-colors">
+              Docs
+            </Link>
           </div>
+          <Link
+            href="/editor"
+            className="px-6 py-2 bg-[#c2ff00] text-black text-sm font-medium rounded-full hover:bg-[#b0ed00] transition-colors"
+          >
+            Join Beta
+          </Link>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <div className="flex-1 flex items-center justify-center px-4 py-12 sm:py-20 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500/10 to-purple-500/10 border border-emerald-500/20 rounded-full text-sm mb-8 animate-fade-in">
-              <Sparkles size={16} className="text-emerald-400" />
-              <span className="text-emerald-400 font-medium">Powered by Claude AI</span>
-              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+      <section className="relative min-h-screen flex items-center justify-center text-center pt-24">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-[#f9f7f3]" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4">
+          <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+            Design AI workflows without code
+          </h1>
+          <p className="mt-6 text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
+            A visual canvas to orchestrate models, APIs and logic. From idea to prototype in minutes.
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/editor"
+              className="inline-flex items-center gap-2 bg-[#c2ff00] text-black py-3 px-6 rounded-full text-sm font-medium hover:bg-[#b0ed00] transition-colors"
+            >
+              Get early access
+              <ArrowRight size={16} />
+            </Link>
+            <Link
+              href="/editor"
+              className="inline-flex items-center gap-2 bg-white text-black py-3 px-6 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors border border-black/10"
+            >
+              See live demo
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Value Proposition */}
+      <section className="py-16 bg-[#f9f7f3]" id="product">
+        <div className="max-w-5xl mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            A canvas for orchestrating intelligent agents
+          </h2>
+          <p className="text-lg md:text-xl text-gray-700 mb-8">
+            Build complex AI behaviours, connect multiple models, and ship production‑ready workflows without touching code.
+          </p>
+        </div>
+      </section>
+
+      {/* Persona Benefits Section */}
+      <section className="py-20 bg-white" id="personas">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-center mb-12 gap-4">
+            <button
+              onClick={() => setPersona('designers')}
+              className={`px-6 py-3 rounded-full text-sm font-medium border-2 transition-all ${
+                persona === 'designers'
+                  ? 'bg-black text-white border-black'
+                  : 'bg-white text-black border-black/20 hover:border-black/40'
+              }`}
+            >
+              Designers
+            </button>
+            <button
+              onClick={() => setPersona('developers')}
+              className={`px-6 py-3 rounded-full text-sm font-medium border-2 transition-all ${
+                persona === 'developers'
+                  ? 'bg-black text-white border-black'
+                  : 'bg-white text-black border-black/20 hover:border-black/40'
+              }`}
+            >
+              Developers
+            </button>
+          </div>
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="space-y-10">
+              {benefits[persona].map((item, index) => (
+                <div key={index}>
+                  <h3 className="text-2xl font-semibold mb-2">{item.title}</h3>
+                  <p className="text-gray-700 leading-relaxed">{item.description}</p>
+                </div>
+              ))}
             </div>
+            <div className="relative w-full h-96 bg-gradient-to-br from-gray-100 to-white rounded-2xl shadow-lg flex items-center justify-center">
+              <span className="text-gray-400 text-sm">Screenshot placeholder</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Main Headline */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight">
-              Design Beautiful UI
-              <br />
-              <span className="bg-gradient-to-r from-emerald-400 via-green-400 to-cyan-400 bg-clip-text text-transparent">
-                Without Writing Code
-              </span>
-            </h1>
-
-            <p className="text-lg sm:text-xl text-[var(--text-secondary)] mb-8 max-w-3xl mx-auto leading-relaxed">
-              The visual AI IDE for designers. Drag nodes, connect workflows, and generate production-ready components in seconds.
-              <span className="text-white font-semibold"> No prompts. No complexity. Just results.</span>
+      {/* Use-case Categories */}
+      <section className="py-20 bg-[#f9f7f3]" id="usecases">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="md:flex md:justify-between md:items-start mb-12">
+            <h2 className="text-4xl font-bold mb-6 md:mb-0">
+              A helvetici workflow for every need
+            </h2>
+            <p className="max-w-xl text-gray-700">
+              Explore templates tailored for marketing, product personalisation, customer support, and operations.
             </p>
-
-            {/* Social Proof */}
-            <div className="flex flex-wrap items-center justify-center gap-6 mb-12 text-sm text-[var(--text-secondary)]">
-              <div className="flex items-center gap-2">
-                <Users size={16} className="text-emerald-400" />
-                <span><span className="text-white font-semibold">10,000+</span> designers</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Star size={16} className="text-emerald-400" />
-                <span><span className="text-white font-semibold">4.9/5</span> rating</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp size={16} className="text-emerald-400" />
-                <span><span className="text-white font-semibold">50k+</span> components created</span>
-              </div>
-            </div>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-              <Link
-                href="/editor"
-                className="group flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl hover:shadow-2xl hover:shadow-emerald-500/50 transition-all text-lg font-semibold"
+          </div>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { name: 'Marketing', desc: 'Content generation & campaigns' },
+              { name: 'Support', desc: 'Customer service automation' },
+              { name: 'Personalisation', desc: 'Product recommendations' },
+              { name: 'Operations', desc: 'Workflow automation' },
+            ].map((cat, idx) => (
+              <div
+                key={idx}
+                className="group relative rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-all"
               >
-                Start Building Free
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
+                <div className="aspect-square bg-gradient-to-br from-gray-100 to-white flex items-center justify-center">
+                  <span className="text-4xl font-bold text-gray-300">{idx + 1}</span>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{cat.name}</h3>
+                  <p className="text-sm text-gray-600">{cat.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
+      {/* Templates Carousel */}
+      <section className="py-20 bg-white" id="templates">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-12 text-center">Template gallery</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: 'Colour palette from an image',
+                description: 'Generate a colour system and matching UI components from any uploaded image.',
+              },
+              {
+                title: 'Summarise + reply',
+                description: 'Turn lengthy user messages into concise summaries and draft natural replies.',
+              },
+              {
+                title: 'Personalised recommendations',
+                description: 'Recommend products using embeddings and previous user actions.',
+              },
+            ].map((template, i) => (
+              <div
+                key={i}
+                className="bg-[#f9f7f3] rounded-2xl p-6 hover:shadow-lg transition-shadow"
+              >
+                <h3 className="text-xl font-semibold mb-3">{template.title}</h3>
+                <p className="text-gray-700 mb-6">{template.description}</p>
+                <Link
+                  href="/editor"
+                  className="inline-flex items-center gap-2 bg-black text-white py-2 px-4 rounded-full text-sm hover:bg-gray-800 transition-colors"
+                >
+                  Use template
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Case Stories */}
+      <section className="py-20 bg-[#f9f7f3]" id="stories">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-8">Stories from our community</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {[1, 2].map((id) => (
               <Link
+                key={id}
                 href="/gallery"
-                className="flex items-center gap-2 px-8 py-4 bg-[var(--node-bg)] border border-[var(--border)] rounded-xl hover:border-emerald-500 transition-all text-lg"
+                className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all"
               >
-                <Boxes size={20} />
-                View Examples
+                <div className="aspect-video bg-gradient-to-br from-gray-100 to-white flex items-center justify-center">
+                  <span className="text-gray-400">Community story {id}</span>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur p-4 flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-gray-600">Featured workflow</p>
+                    <p className="font-semibold">Story title goes here</p>
+                  </div>
+                  <span className="h-8 w-8 bg-[#c2ff00] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <ArrowRight className="text-black" size={16} />
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link
+              href="/gallery"
+              className="inline-flex items-center gap-2 bg-black text-white py-3 px-6 rounded-full text-sm hover:bg-gray-800 transition-colors"
+            >
+              View all stories
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Team & Mission */}
+      <section className="py-20 bg-white" id="about">
+        <div className="max-w-5xl mx-auto px-4 md:flex md:items-center md:justify-between gap-12">
+          <div className="mb-8 md:mb-0 flex-1">
+            <h2 className="text-4xl font-bold mb-4">The team behind the tech</h2>
+            <p className="text-gray-700 mb-6 leading-relaxed">
+              We're a group of designers, engineers and dreamers building a future where AI workflows are tools for everyone—not just developers.
+            </p>
+            <Link
+              href="/editor"
+              className="inline-flex items-center gap-2 bg-black text-white py-3 px-6 rounded-full text-sm hover:bg-gray-800 transition-colors"
+            >
+              Learn more about us
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+          <div className="w-full md:w-1/2 h-72 rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-gray-100 to-white flex items-center justify-center">
+            <span className="text-gray-400">Team photo</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="py-20 bg-[#f9f7f3]" id="pricing">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Pricing</h2>
+            <p className="text-xl text-gray-700">Start free. Upgrade anytime.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white rounded-2xl p-8 shadow-md">
+              <div className="text-xs tracking-wider text-gray-400 uppercase mb-4">Free</div>
+              <div className="text-5xl font-bold mb-2">$0</div>
+              <div className="text-sm text-gray-600 mb-6">Forever</div>
+              <ul className="space-y-3 mb-8 text-sm text-gray-700">
+                <li>• 10 generations/month</li>
+                <li>• All templates</li>
+                <li>• Export HTML/React</li>
+                <li>• Community support</li>
+              </ul>
+              <Link
+                href="/editor"
+                className="block text-center px-6 py-3 border border-black text-black rounded-full hover:bg-black hover:text-white transition-all text-sm"
+              >
+                Start Free
               </Link>
             </div>
 
-            {/* Trust Badge */}
-            <p className="text-xs text-[var(--text-secondary)]">
-              Free forever • No credit card required • 10 generations included
-            </p>
-          </div>
-
-          {/* Hero Visual - 3D Sequence */}
-          <div className="relative max-w-5xl mx-auto">
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent z-10 pointer-events-none" />
-            <div className="glass-panel rounded-2xl p-2 shadow-2xl">
-              <Hero3DSequence />
-            </div>
-            {/* Floating elements */}
-            <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl blur-xl opacity-60 animate-pulse" />
-            <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-2xl blur-xl opacity-60 animate-pulse" style={{ animationDelay: '1s' }} />
-          </div>
-
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-32">
-            <div className="group glass-panel rounded-2xl p-8 hover:border-emerald-500/50 transition-all hover:shadow-lg hover:shadow-emerald-500/10">
-              <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Workflow size={28} className="text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Visual Workflows</h3>
-              <p className="text-[var(--text-secondary)] leading-relaxed">
-                Drag and drop nodes to build complex AI workflows. Connect inputs to AI generators to preview outputs. Simple, intuitive, powerful.
-              </p>
-            </div>
-
-            <div className="group glass-panel rounded-2xl p-8 hover:border-emerald-500/50 transition-all hover:shadow-lg hover:shadow-emerald-500/10">
-              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Zap size={28} className="text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Instant Generation</h3>
-              <p className="text-[var(--text-secondary)] leading-relaxed">
-                Powered by Claude AI. Generate beautiful, production-ready components in seconds. See results in real-time as AI creates.
-              </p>
-            </div>
-
-            <div className="group glass-panel rounded-2xl p-8 hover:border-emerald-500/50 transition-all hover:shadow-lg hover:shadow-emerald-500/10">
-              <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Code2 size={28} className="text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Export Anywhere</h3>
-              <p className="text-[var(--text-secondary)] leading-relaxed">
-                Download as HTML, React, or copy the code. Every component is production-ready with Tailwind CSS. Ship faster.
-              </p>
-            </div>
-          </div>
-
-          {/* How it Works */}
-          <div className="mt-32">
-            <div className="text-center mb-16">
-              <div className="inline-block px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-sm text-emerald-400 font-medium mb-6">
-                Simple 3-Step Process
-              </div>
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4">How It Works</h2>
-              <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto">
-                From idea to production-ready code in under 60 seconds
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="relative">
-                <div className="glass-panel rounded-2xl p-8 text-center">
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                    1
-                  </div>
-                  <div className="mt-4 mb-6">
-                    <div className="w-16 h-16 mx-auto bg-emerald-500/10 rounded-2xl flex items-center justify-center">
-                      <Workflow size={32} className="text-emerald-400" />
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3">Drag & Connect</h3>
-                  <p className="text-[var(--text-secondary)]">
-                    Add nodes to the canvas. Connect text inputs to AI generators to preview outputs. Build your workflow visually.
-                  </p>
-                </div>
-              </div>
-
-              <div className="relative">
-                <div className="glass-panel rounded-2xl p-8 text-center">
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                    2
-                  </div>
-                  <div className="mt-4 mb-6">
-                    <div className="w-16 h-16 mx-auto bg-purple-500/10 rounded-2xl flex items-center justify-center">
-                      <Sparkles size={32} className="text-purple-400" />
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3">Describe & Generate</h3>
-                  <p className="text-[var(--text-secondary)]">
-                    Type what you want to create. Hit "Run Flow" and watch Claude generate beautiful, styled components instantly.
-                  </p>
-                </div>
-              </div>
-
-              <div className="relative">
-                <div className="glass-panel rounded-2xl p-8 text-center">
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                    3
-                  </div>
-                  <div className="mt-4 mb-6">
-                    <div className="w-16 h-16 mx-auto bg-cyan-500/10 rounded-2xl flex items-center justify-center">
-                      <Code2 size={32} className="text-cyan-400" />
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3">Export & Ship</h3>
-                  <p className="text-[var(--text-secondary)]">
-                    Love what you see? Export as HTML, React, or copy the code. Deploy to production immediately.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Pricing Teaser */}
-          <div className="mt-32 text-center">
-            <div className="inline-block px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full text-sm text-purple-400 font-medium mb-6">
-              Simple, Transparent Pricing
-            </div>
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">Start Free, Scale as You Grow</h2>
-            <p className="text-xl text-[var(--text-secondary)] mb-12 max-w-2xl mx-auto">
-              10 free generations to get started. Upgrade when you're ready for more.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {/* Free */}
-              <div className="glass-panel rounded-2xl p-8 hover:border-emerald-500/30 transition-all">
-                <h3 className="text-2xl font-bold mb-2">Free</h3>
-                <div className="text-4xl font-bold mb-6">
-                  $0<span className="text-lg text-[var(--text-secondary)] font-normal">/month</span>
-                </div>
-                <ul className="space-y-3 mb-8 text-left">
-                  {['10 generations/month', 'All templates', 'Export to HTML/React', 'Community support'].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check size={16} className="text-emerald-400 flex-shrink-0" />
-                      <span className="text-[var(--text-secondary)]">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/editor"
-                  className="w-full block text-center px-6 py-3 bg-[var(--node-bg)] border border-[var(--border)] rounded-xl hover:border-emerald-500 transition-all font-semibold"
-                >
-                  Start Free
-                </Link>
-              </div>
-
-              {/* Pro */}
-              <div className="relative glass-panel rounded-2xl p-8 border-2 border-emerald-500/50 hover:border-emerald-500 transition-all">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full text-xs font-bold text-white">
-                  POPULAR
-                </div>
-                <h3 className="text-2xl font-bold mb-2">Pro</h3>
-                <div className="text-4xl font-bold mb-6">
-                  $9<span className="text-lg text-[var(--text-secondary)] font-normal">/month</span>
-                </div>
-                <ul className="space-y-3 mb-8 text-left">
-                  {['500 generations/month', 'Remove branding', 'Priority support', 'Advanced templates'].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check size={16} className="text-emerald-400 flex-shrink-0" />
-                      <span className="text-[var(--text-secondary)]">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/editor"
-                  className="w-full block text-center px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl hover:shadow-lg hover:shadow-emerald-500/50 transition-all font-semibold"
-                >
-                  Get Pro
-                </Link>
-              </div>
-
-              {/* Unlimited */}
-              <div className="glass-panel rounded-2xl p-8 hover:border-purple-500/30 transition-all">
-                <h3 className="text-2xl font-bold mb-2">Unlimited</h3>
-                <div className="text-4xl font-bold mb-6">
-                  $29<span className="text-lg text-[var(--text-secondary)] font-normal">/month</span>
-                </div>
-                <ul className="space-y-3 mb-8 text-left">
-                  {['Unlimited generations', 'Everything in Pro', 'API access', 'Custom integrations'].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check size={16} className="text-purple-400 flex-shrink-0" />
-                      <span className="text-[var(--text-secondary)]">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/editor"
-                  className="w-full block text-center px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all font-semibold"
-                >
-                  Go Unlimited
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Final CTA */}
-          <div className="mt-32 mb-20">
-            <div className="glass-panel rounded-3xl p-12 sm:p-16 text-center bg-gradient-to-br from-emerald-500/10 to-purple-500/10 border-emerald-500/20">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-                Ready to Build Something Amazing?
-              </h2>
-              <p className="text-xl text-[var(--text-secondary)] mb-10 max-w-2xl mx-auto">
-                Join thousands of designers creating beautiful UIs with AI. No credit card required.
-              </p>
+            <div className="bg-black text-white rounded-2xl p-8 shadow-xl transform md:scale-105">
+              <div className="text-xs tracking-wider text-[#c2ff00] uppercase mb-4">Pro</div>
+              <div className="text-5xl font-bold mb-2">$9</div>
+              <div className="text-sm text-gray-300 mb-6">Per month</div>
+              <ul className="space-y-3 mb-8 text-sm">
+                <li>• 500 generations/month</li>
+                <li>• Remove branding</li>
+                <li>• Priority support</li>
+                <li>• Advanced templates</li>
+              </ul>
               <Link
                 href="/editor"
-                className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl hover:shadow-2xl hover:shadow-emerald-500/50 transition-all text-lg font-bold"
+                className="block text-center px-6 py-3 bg-[#c2ff00] text-black rounded-full hover:bg-[#b0ed00] transition-all text-sm font-medium"
               >
-                Start Building Free
-                <ArrowRight size={24} />
+                Get Pro
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-2xl p-8 shadow-md">
+              <div className="text-xs tracking-wider text-gray-400 uppercase mb-4">Unlimited</div>
+              <div className="text-5xl font-bold mb-2">$29</div>
+              <div className="text-sm text-gray-600 mb-6">Per month</div>
+              <ul className="space-y-3 mb-8 text-sm text-gray-700">
+                <li>• Unlimited generations</li>
+                <li>• Everything in Pro</li>
+                <li>• API access</li>
+                <li>• Custom integrations</li>
+              </ul>
+              <Link
+                href="/editor"
+                className="block text-center px-6 py-3 border border-black text-black rounded-full hover:bg-black hover:text-white transition-all text-sm"
+              >
+                Go Unlimited
               </Link>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Footer */}
-      <footer className="relative z-20 border-t border-[var(--border)] bg-[var(--bg-surface)]/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            {/* Brand */}
-            <div className="md:col-span-2">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-lg flex items-center justify-center">
-                  <Sparkles size={18} className="text-white" />
-                </div>
-                <span className="text-xl font-bold">Helvetici</span>
-              </div>
-              <p className="text-sm text-[var(--text-secondary)] mb-4 max-w-xs">
-                The visual AI IDE for designers. Build beautiful UIs without writing code.
-              </p>
-              <div className="flex items-center gap-3">
-                <a
-                  href="https://github.com/osiristephenson/helvetici"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--text-secondary)] hover:text-emerald-400 transition-colors"
-                >
-                  <Code2 size={20} />
-                </a>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--text-secondary)] hover:text-emerald-400 transition-colors"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            {/* Product */}
-            <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <Link href="/editor" className="text-[var(--text-secondary)] hover:text-white transition-colors">
-                    Editor
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/gallery" className="text-[var(--text-secondary)] hover:text-white transition-colors">
-                    Gallery
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/editor" className="text-[var(--text-secondary)] hover:text-white transition-colors">
-                    Pricing
-                  </Link>
-                </li>
-                <li>
-                  <a href="https://github.com/osiristephenson/helvetici" className="text-[var(--text-secondary)] hover:text-white transition-colors">
-                    Changelog
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href="https://github.com/osiristephenson/helvetici" className="text-[var(--text-secondary)] hover:text-white transition-colors">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="https://github.com/osiristephenson/helvetici" className="text-[var(--text-secondary)] hover:text-white transition-colors">
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a href="https://twitter.com" className="text-[var(--text-secondary)] hover:text-white transition-colors">
-                    Twitter
-                  </a>
-                </li>
-                <li>
-                  <a href="mailto:hello@helvetici.com" className="text-[var(--text-secondary)] hover:text-white transition-colors">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
+      <footer className="bg-[#c2ff00] py-20">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-6xl md:text-8xl font-extrabold uppercase tracking-tight mb-12">
+            helvetici
+          </h2>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-6 text-sm font-medium mb-6">
+            <Link href="/product" className="hover:underline">Product</Link>
+            <Link href="/templates" className="hover:underline">Templates</Link>
+            <Link href="/gallery" className="hover:underline">Gallery</Link>
+            <a href="#pricing" className="hover:underline">Pricing</a>
+            <Link href="/docs" className="hover:underline">Docs</Link>
+            <a href="https://github.com/osiristephenson/helvetici" className="hover:underline">GitHub</a>
           </div>
-
-          {/* Bottom */}
-          <div className="pt-8 border-t border-[var(--border)] flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[var(--text-secondary)]">
-            <p>© 2024 Helvetici. Built by designers, for designers. Powered by Claude AI.</p>
-            <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
-            </div>
-          </div>
+          <p className="mt-6 text-xs text-black/70">
+            © {new Date().getFullYear()} Helvetici. All rights reserved. Powered by Claude AI.
+          </p>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

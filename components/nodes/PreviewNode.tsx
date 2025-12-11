@@ -108,31 +108,33 @@ export default function HelveticiComponent() {
   };
 
   return (
-    <div className="min-w-[400px]">
+    <div className="min-w-[400px] bg-white border border-gray-300 rounded-lg shadow-sm p-4">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <Eye size={16} className="text-[var(--accent)]" />
-          <span className="text-sm font-semibold">Preview</span>
+          <div className="p-1.5 bg-gray-100 rounded">
+            <Eye size={14} className="text-gray-700" />
+          </div>
+          <span className="text-sm font-semibold text-gray-900">Preview</span>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 bg-gray-100 rounded p-1">
             <button
               onClick={() => setActiveTab('preview')}
-              className={`px-3 py-1 text-xs rounded ${
+              className={`px-3 py-1 text-xs rounded transition-colors ${
                 activeTab === 'preview'
-                  ? 'bg-[var(--accent)] text-white'
-                  : 'text-[var(--text-secondary)] hover:text-white'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               Preview
             </button>
             <button
               onClick={() => setActiveTab('code')}
-              className={`px-3 py-1 text-xs rounded ${
+              className={`px-3 py-1 text-xs rounded transition-colors ${
                 activeTab === 'code'
-                  ? 'bg-[var(--accent)] text-white'
-                  : 'text-[var(--text-secondary)] hover:text-white'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               Code
@@ -143,31 +145,31 @@ export default function HelveticiComponent() {
             <div className="relative">
               <button
                 onClick={() => setShowExportMenu(!showExportMenu)}
-                className="p-2 hover:bg-[var(--bg-primary)] rounded transition-colors"
+                className="p-2 hover:bg-gray-100 rounded transition-colors text-gray-700"
                 title="Export"
               >
                 <Download size={14} />
               </button>
 
               {showExportMenu && (
-                <div className="absolute right-0 top-full mt-2 bg-[var(--bg-surface)] border border-[var(--border)] rounded-lg shadow-xl z-50 min-w-[160px]">
+                <div className="absolute right-0 top-full mt-2 bg-white border border-gray-300 rounded-lg shadow-xl z-50 min-w-[160px]">
                   <button
                     onClick={handleDownloadHTML}
-                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-[var(--bg-primary)] text-sm text-left"
+                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-50 text-sm text-left text-gray-900"
                   >
                     <FileCode size={14} />
                     Export HTML
                   </button>
                   <button
                     onClick={handleDownloadReact}
-                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-[var(--bg-primary)] text-sm text-left"
+                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-50 text-sm text-left text-gray-900"
                   >
                     <FileCode size={14} />
                     Export React
                   </button>
                   <button
                     onClick={handleCopy}
-                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-[var(--bg-primary)] text-sm text-left border-t border-[var(--border)]"
+                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-50 text-sm text-left border-t border-gray-200 text-gray-900"
                   >
                     <Copy size={14} />
                     Copy Code
@@ -179,36 +181,36 @@ export default function HelveticiComponent() {
         </div>
       </div>
 
-      <div className="bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg min-h-[300px] max-h-[500px] relative overflow-hidden">
+      <div className="bg-gray-50 border border-gray-200 rounded min-h-[300px] max-h-[500px] relative overflow-hidden">
         {data.output ? (
           <>
             {activeTab === 'preview' ? (
               <iframe
                 srcDoc={getIframeContent()}
-                className="w-full h-full min-h-[300px] max-h-[500px] bg-white rounded-lg"
+                className="w-full h-full min-h-[300px] max-h-[500px] bg-white"
                 sandbox="allow-scripts"
                 title="Preview"
               />
             ) : (
               <div className="relative h-full overflow-auto max-h-[500px]">
-                <pre className="p-4 text-xs overflow-auto text-[var(--text-secondary)]">
+                <pre className="p-4 text-xs overflow-auto text-gray-700 font-mono">
                   <code>{data.output}</code>
                 </pre>
                 <button
                   onClick={handleCopy}
-                  className="absolute top-2 right-2 p-2 bg-[var(--node-bg)] border border-[var(--border)] rounded hover:border-[var(--accent)] transition-colors"
+                  className="absolute top-2 right-2 p-2 bg-white border border-gray-300 rounded hover:border-[#c2ff00] hover:bg-[#c2ff00]/10 transition-colors"
                   title="Copy code"
                 >
-                  {copied ? <Check size={14} className="text-green-400" /> : <Copy size={14} />}
+                  {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} className="text-gray-700" />}
                 </button>
               </div>
             )}
           </>
         ) : (
-          <div className="flex items-center justify-center h-[300px] text-[var(--text-secondary)] text-sm">
+          <div className="flex items-center justify-center h-[300px] text-gray-400 text-sm">
             <div className="text-center">
-              <Code size={32} className="mx-auto mb-2 opacity-50" />
-              <p>No output yet</p>
+              <Code size={32} className="mx-auto mb-2" />
+              <p className="text-gray-600">No output yet</p>
               <p className="text-xs mt-1">Connect nodes and run the flow</p>
             </div>
           </div>
@@ -220,11 +222,10 @@ export default function HelveticiComponent() {
         type="target"
         position={Position.Left}
         style={{
-          width: '16px',
-          height: '16px',
-          background: '#10b981',
-          border: '3px solid #0a0a0b',
-          boxShadow: '0 0 10px rgba(16, 185, 129, 0.4)',
+          width: '12px',
+          height: '12px',
+          background: '#9CA3AF',
+          border: '2px solid white',
           cursor: 'crosshair',
         }}
       />

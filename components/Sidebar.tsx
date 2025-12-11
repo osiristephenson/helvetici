@@ -16,9 +16,9 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="w-64 bg-[var(--bg-surface)] border-r border-[var(--border)] p-4 flex flex-col gap-4 relative z-10">
+    <div className="w-56 bg-[#ECECEC] border-r border-gray-300 p-4 flex flex-col gap-4 relative z-10">
       <div>
-        <h2 className="text-xs font-bold mb-4 text-[var(--accent)] uppercase tracking-widest">
+        <h2 className="text-xs font-bold mb-4 text-gray-900 uppercase tracking-wide">
           Nodes
         </h2>
         <div className="space-y-2">
@@ -27,20 +27,20 @@ export default function Sidebar() {
               key={node.type}
               draggable={true}
               onDragStart={(e) => onDragStart(e, node.type)}
-              className="group flex items-center gap-3 p-3 bg-[var(--node-bg)] border border-[var(--border)] rounded-xl cursor-grab active:cursor-grabbing hover:border-[var(--accent)] hover:shadow-lg hover:shadow-[var(--accent-glow)] transition-all duration-200"
+              className="group flex items-center gap-3 p-2 bg-white border border-gray-300 rounded cursor-grab active:cursor-grabbing hover:border-[#c2ff00] hover:bg-[#c2ff00]/10 transition-all"
             >
-              <div className="p-2 rounded-lg bg-[var(--bg-primary)] group-hover:bg-[var(--accent)] group-hover:bg-opacity-10 transition-all">
-                <node.icon size={16} className="text-[var(--accent)]" />
+              <div className="p-1.5 rounded bg-gray-100 group-hover:bg-[#c2ff00]/20 transition-all">
+                <node.icon size={14} className="text-gray-700 group-hover:text-gray-900" />
               </div>
-              <span className="text-sm font-medium">{node.label}</span>
+              <span className="text-sm font-medium text-gray-900">{node.label}</span>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="mt-auto pt-4 border-t border-[var(--border)]">
-        <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-          Drag nodes onto the canvas to build your AI workflow
+      <div className="mt-auto pt-4 border-t border-gray-300">
+        <p className="text-xs text-gray-600 leading-relaxed">
+          Drag nodes onto the canvas to build your workflow
         </p>
       </div>
     </div>
