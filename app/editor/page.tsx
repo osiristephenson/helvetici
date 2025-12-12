@@ -8,13 +8,15 @@ import WorkflowManager from '@/components/WorkflowManager';
 import TemplatesModal from '@/components/TemplatesModal';
 import UpgradeModal from '@/components/UpgradeModal';
 import Onboarding from '@/components/Onboarding';
+import { TemplatePicker } from '@/components/TemplatePicker';
 import { useStore } from '@/lib/store';
 import { getUserPlan } from '@/lib/credits';
+import { TEMPLATES, type TemplateId } from '@/lib/templates';
 import { Play, Trash2, Home, Settings as SettingsIcon, Save, FolderOpen, Sparkles, Zap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function EditorPage() {
-  const { runFlow, isRunning, nodes, edges, currentWorkflowName } = useStore();
+  const { runFlow, isRunning, nodes, edges, currentWorkflowName, addNode, onConnect, updateNodeData } = useStore();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [workflowManagerOpen, setWorkflowManagerOpen] = useState(false);
   const [workflowManagerMode, setWorkflowManagerMode] = useState<'save' | 'load'>('save');
@@ -22,6 +24,8 @@ export default function EditorPage() {
   const [isUpgradeOpen, setIsUpgradeOpen] = useState(false);
   const [userPlan, setUserPlan] = useState(getUserPlan());
   const [forceUpdate, setForceUpdate] = useState(0);
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateId | null>(null);
+  const [advancedMode, setAdvancedMode] = useState(false);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -70,10 +74,43 @@ export default function EditorPage() {
     setForceUpdate(prev => prev + 1);
   };
 
+  const handleTemplateSelect = (templateId: TemplateId) => {
+    const template = TEMPLATES.find(t => t.id === templateId);
+    if (!template) return;
+
+    setSelectedTemplate(templateId);
+
+    // Create nodes: TextInput -> AIGenerate -> Preview
+    const textInputId = `textInput-${Date.now()}`;
+    const aiGenerateId = `aiGenerate-${Date.now() + 1}`;
+    const previewId = `preview-${Date.now() + 2}`;
+
+    // Add nodes with specific positions
+    addNode('textInput', { x: 100, y: 200 });
+    addNode('aiGenerate', { x: 450, y: 200 });
+    addNode('preview', { x: 800, y: 150 });
+
+    // Set default prompt on the text input node
+    setTimeout(() => {
+      updateNodeData(textInputId, { value: template.defaultPrompt });
+
+      // Connect the nodes
+      onConnect({ source: textInputId, target: aiGenerateId, sourceHandle: null, targetHandle: null });
+      onConnect({ source: aiGenerateId, target: previewId, sourceHandle: null, targetHandle: null });
+    }, 100);
+  };
+
+  // Show template picker if no template selected and no nodes
+  const showTemplatePicker = !selectedTemplate && nodes.length === 0;
+
   return (
     <div className="flex flex-col h-screen relative overflow-hidden bg-[#F5F5F5]">
-      {/* Top Bar */}
-      <div className="h-14 bg-[#E0E0E0] border-b border-gray-300 flex items-center justify-between px-4">
+      {showTemplatePicker ? (
+        <TemplatePicker onPick={handleTemplateSelect} />
+      ) : (
+        <>
+          {/* Top Bar */}
+          <div className="h-14 bg-[#E0E0E0] border-b border-gray-300 flex items-center justify-between px-4">
         <div className="flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2 hover:opacity-70 transition-opacity text-gray-900">
             <h1 className="text-lg font-bold">helvetici</h1>
@@ -99,6 +136,19 @@ export default function EditorPage() {
             <span className={`text-xs font-medium ${userPlan.credits <= 3 ? 'text-amber-500' : 'text-gray-900'}`}>
               {userPlan.credits} credits
             </span>
+          </button>
+
+          {/* Advanced Mode Toggle */}
+          <button
+            onClick={() => setAdvancedMode(!advancedMode)}
+            className={`flex items-center gap-2 px-3 py-1.5 border rounded transition-colors ${
+              advancedMode
+                ? 'bg-[#c2ff00] border-[#c2ff00] text-black'
+                : 'bg-white border-gray-300 text-gray-700 hover:border-gray-400'
+            }`}
+            title="Toggle Advanced Mode"
+          >
+            <span className="text-xs font-medium">Advanced</span>
           </button>
         </div>
 
@@ -206,6 +256,8 @@ export default function EditorPage() {
 
       {/* Onboarding */}
       <Onboarding />
+        </>
+      )}
     </div>
   );
 }
