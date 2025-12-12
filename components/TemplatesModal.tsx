@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { X, Sparkles, Zap } from 'lucide-react';
 import { useStore } from '@/lib/store';
-import { templates, Template } from '@/lib/templates';
+import { TEMPLATES, Template } from '@/lib/templates';
 
 interface TemplatesModalProps {
   isOpen: boolean;
@@ -23,8 +23,8 @@ export default function TemplatesModal({ isOpen, onClose }: TemplatesModalProps)
   ];
 
   const filteredTemplates = selectedCategory === 'all'
-    ? templates
-    : templates.filter(t => t.category === selectedCategory);
+    ? TEMPLATES
+    : TEMPLATES.filter(t => t.category === selectedCategory);
 
   const handleLoadTemplate = (template: Template) => {
     if (confirm('Load this template? Current workflow will be replaced.')) {
