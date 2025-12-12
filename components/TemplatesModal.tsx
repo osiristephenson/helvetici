@@ -11,35 +11,14 @@ interface TemplatesModalProps {
 }
 
 export default function TemplatesModal({ isOpen, onClose }: TemplatesModalProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const { newWorkflow } = useStore();
-
-  const categories = [
-    { id: 'all', label: 'All Templates' },
-    { id: 'saas', label: 'SaaS' },
-    { id: 'landing', label: 'Landing Pages' },
-    { id: 'marketing', label: 'Marketing' },
-    { id: 'ecommerce', label: 'E-commerce' },
-  ];
-
-  const filteredTemplates = selectedCategory === 'all'
-    ? TEMPLATES
-    : TEMPLATES.filter(t => t.category === selectedCategory);
+  const { newWorkflow, addNode, onConnect, updateNodeData } = useStore();
 
   const handleLoadTemplate = (template: Template) => {
-    if (confirm('Load this template? Current workflow will be replaced.')) {
-      newWorkflow();
-      const { loadWorkflow } = useStore.getState();
+    // Close modal and redirect to editor
+    onClose();
 
-      // Directly set nodes and edges
-      useStore.setState({
-        nodes: template.nodes,
-        edges: template.edges,
-        currentWorkflowName: template.name,
-      });
-
-      onClose();
-    }
+    // Navigate to editor - the TemplatePicker will handle template selection
+    window.location.href = '/editor';
   };
 
   if (!isOpen) return null;
@@ -61,55 +40,27 @@ export default function TemplatesModal({ isOpen, onClose }: TemplatesModalProps)
           </button>
         </div>
 
-        {/* Categories */}
-        <div className="flex items-center gap-2 px-6 py-4 border-b border-[var(--border)] overflow-x-auto">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                selectedCategory === category.id
-                  ? 'bg-[var(--accent)] text-white'
-                  : 'bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:text-white'
-              }`}
-            >
-              {category.label}
-            </button>
-          ))}
-        </div>
-
         {/* Templates Grid */}
         <div className="p-6 overflow-y-auto max-h-[calc(80vh-180px)]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredTemplates.map((template) => (
+            {TEMPLATES.map((template) => (
               <button
                 key={template.id}
                 onClick={() => handleLoadTemplate(template)}
                 className="group bg-[var(--bg-primary)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--accent)] transition-all text-left"
               >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Zap size={24} className="text-white" />
-                  </div>
-                  <span className="text-xs px-2 py-1 bg-[var(--bg-surface)] border border-[var(--border)] rounded-full text-[var(--text-secondary)]">
-                    {template.category}
-                  </span>
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform mb-4">
+                  <Zap size={24} className="text-white" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2 group-hover:text-[var(--accent)] transition-colors">
-                  {template.name}
+                  {template.title}
                 </h3>
                 <p className="text-sm text-[var(--text-secondary)]">
-                  {template.description}
+                  {template.subtitle}
                 </p>
               </button>
             ))}
           </div>
-
-          {filteredTemplates.length === 0 && (
-            <div className="text-center py-12 text-[var(--text-secondary)]">
-              No templates in this category yet
-            </div>
-          )}
         </div>
       </div>
     </div>
